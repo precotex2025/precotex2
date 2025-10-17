@@ -1,0 +1,41 @@
+<!-- presentacion.component.html -->
+<div class="container"> 
+    <div class="grid-container"> 
+        <div class="title"> Agrupamiento de Bultos de Hilado</div>
+        <div class="container-fluid bg-gradient">
+            <!-- Título con espacio hacia abajo -->
+            <!-- <div class="text-center my-5">
+            <h1 class="display-4">Bienvenido a la Presentación</h1>
+            </div> -->
+
+            <br>
+        
+            <!-- Botones verticales -->
+            <div class="d-flex flex-column justify-content-center align-items-center" style="display: flex;flex-direction: column;justify-content: space-evenly;">
+
+                <button type="button" class="btn-standar" mat-flat-button (click)="link_UbicacionBultoConsulta()">                    
+                    <mat-icon aria-label="person">search</mat-icon> Ubicación bulto consulta
+                </button>
+                <br>
+                <button type="button" class="btn-standar-success" mat-flat-button (click)="link_GeneraGrupos()">                    
+                    <mat-icon aria-label="person">done</mat-icon> Genera / Consulta grupo
+                </button>
+                <br>
+                <button type="button" class="btn-standar-warning" mat-flat-button (click)="link_UbicaReubicaGrupo()">                    
+                    <mat-icon aria-label="person">where_to_vote</mat-icon> Reubica / Ubica grupo
+                </button>
+                <br>
+                <!-- <button class="btn waves-effect waves-light btn-large pink lighten-2 mb-4 w-75">
+                    Ubicación bulto consulta
+                </button> -->
+                <!-- <button class="btn waves-effect waves-light btn-large purple lighten-2 mb-4 w-75">
+                    Genera / Consulta grupo
+                </button> -->
+                <!-- <button class="btn waves-effect waves-light btn-large indigo lighten-1 w-75">
+                    Reubica / Ubica grupo
+                </button> -->
+            </div>
+        </div>
+    </div>
+</div>
+  

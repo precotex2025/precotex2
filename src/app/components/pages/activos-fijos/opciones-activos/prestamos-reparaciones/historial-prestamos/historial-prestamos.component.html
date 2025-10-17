@@ -1,0 +1,146 @@
+<mat-card>
+    <mat-card-header>
+        <div class="row content" style="width: 100%;">
+            <div class="col-md-9 col-xs-12">
+                <span style="font-weight: bold;">Historial Préstamos
+                </span>
+            </div>
+            <div class="col-md-3 col-xs-12 close">
+                <button mat-raised-button class="button-cancel" (click)="regresar()"
+                    color="primary">
+                    <mat-icon>keyboard_arrow_left</mat-icon> REGRESAR
+                </button>
+            </div>
+        </div>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="row">
+            <div class="col-md-3">
+                <mat-form-field class="fila1-nombres" appearance="fill">
+                    <mat-label>Escribe el dato a buscar </mat-label>
+                    <input matInput type="text" (keyup)="applyFilter($event)" placeholder="Buscar" autocomplete="off"/>
+                </mat-form-field>    
+            </div>
+            <div class="col-md-3"></div>
+            <div class="col-md-3"></div>
+            <div class="col-md-3"></div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-12 tabla mt-3">
+                <table mat-table class="mat-elevation-z8" #table [dataSource]="dataSource">
+                    <ng-container matColumnDef="codActivoFijo">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Cod.
+                            Activo</th>
+                        <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                            {{data_det.codActivoFijo}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="tipo">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Tipo</th>
+                        <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                            <ng-container *ngIf="data_det.tipo == 1">
+                                PRÉSTAMO
+                            </ng-container>
+                            <ng-container *ngIf="data_det.tipo == 2">
+                                REPARACIÓN
+                            </ng-container>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="responsable">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Responsable</th>
+                        <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                            {{data_det.responsable}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="proveedor">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">
+                            Proveedor</th>
+                        <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                            {{data_det.proveedor}}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="fechaInicio">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">
+                            Fecha Inicio</th>
+                        <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                            {{data_det.fechaInicio | date:'d/MM/Y' }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="fechaFin">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">
+                            Fecha Fin</th>
+                        <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                            {{data_det.fechaFin | date:'d/MM/Y'}}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="fechaRegistro">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">
+                            Fecha Registro</th>
+                        <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                            {{data_det.fechaRegistro | date:'d/MM/Y'}}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="codUsuario">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">
+                            Cod. Usuario</th>
+                        <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                            {{data_det.codUsuario}}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="documentoGuia">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">
+                            Guía </th>
+                        <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                           <button *ngIf="data_det.documentoGuia != ''" mat-icon-button color="primary" (click)="descargarArchivo(data_det.documentoGuia)"><mat-icon>download</mat-icon></button>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="documentoOrden">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">
+                            Orden</th>
+                        <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                            <button *ngIf="data_det.documentoOrden != ''" mat-icon-button color="primary" (click)="descargarArchivo(data_det.documentoOrden)"><mat-icon>download</mat-icon></button>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="documentoContratoPrestamo">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">
+                            Contrato Préstamo</th>
+                        <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                            <button *ngIf="data_det.documentoContratoPrestamo != ''" mat-icon-button color="primary" (click)="descargarArchivo(data_det.documentoContratoPrestamo)"><mat-icon>download</mat-icon></button>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="completado">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">
+                            Completado</th>
+                        <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                            <mat-slide-toggle [disabled]="data_det.completado == 1" (change)="setCompletado($event, data_det)" [checked]="data_det.completado == 1"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="fechaCompletado">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">
+                            F. Completado</th>
+                        <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                            <span *ngIf="data_det.fechaCompletado != null">{{data_det.fechaCompletado | date: 'dd/MM/Y'}}</span> 
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="acciones">
+                        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                        <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+
+                            <a mat-icon-button (click)="EliminarRegistro(data_det)">
+                                <mat-icon color="warn">delete</mat-icon>
+                            </a>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                    <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+
+                    <!-- Row shown when there is no matching data. -->
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">No se encontraron registros</td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+
+    </mat-card-content>
+</mat-card>

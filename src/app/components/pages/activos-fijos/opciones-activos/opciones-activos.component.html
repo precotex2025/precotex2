@@ -1,0 +1,137 @@
+<div class="container-fluid">
+    <!-- ventana nro 3 - salida -->
+    <div class="grid-container">
+
+        <div class="title">Operaciones Activos</div>
+
+        <div class="find">
+            <div class="auditoriaForm">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <mat-card>
+                                <mat-card-header>Lista de Opciones</mat-card-header>
+                                <mat-card-content>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <mat-card>
+                                                <mat-card-header>Adjuntar Documentos</mat-card-header>
+                                                <mat-card-content class="content-icon">
+                                                    <button class="boton-icon" (click)="adjuntarDocumentos()"><mat-icon class="mat-icon">attach_file</mat-icon></button>
+                                                </mat-card-content>
+                                            </mat-card>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <mat-card>
+                                                <mat-card-header>Baja de Activos</mat-card-header>
+                                                <mat-card-content class="content-icon">
+                                                    <button class="boton-icon" (click)="bajaActivos()"><mat-icon class="mat-icon">trending_down</mat-icon></button>
+                                                </mat-card-content>
+                                            </mat-card>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <mat-card>
+                                                <mat-card-header>Reporte de Mejoras</mat-card-header>
+                                                <mat-card-content class="content-icon">
+                                                    <button class="boton-icon" (click)="reporteMejoras()"><mat-icon class="mat-icon">trending_up</mat-icon></button>
+                                                </mat-card-content>
+                                            </mat-card>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <mat-card>
+                                                <mat-card-header>Formatos diversos</mat-card-header>
+                                                <mat-card-content class="content-icon">
+                                                    <button class="boton-icon" (click)="formatosDiversos()"><mat-icon class="mat-icon"> insert_drive_file</mat-icon></button>
+                                                </mat-card-content>
+                                            </mat-card>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <!-- <div class="col-md-3">
+                                            <mat-card>
+                                                <mat-card-header>Depreciación de Activos</mat-card-header>
+                                                <mat-card-content class="content-icon">
+                                                    <button class="boton-icon" (click)="depreciacionActivos()"><mat-icon class="mat-icon-danger">arrow_right_alt</mat-icon></button>
+                                                </mat-card-content>
+                                            </mat-card>
+                                        </div> -->
+                                        <div class="col-md-3">
+                                            <mat-card>
+                                                <mat-card-header>Historial de Ubicaciones</mat-card-header>
+                                                <mat-card-content class="content-icon">
+                                                    <button class="boton-icon" (click)="historialUbicaciones()"><mat-icon class="mat-icon">map</mat-icon></button>
+                                                </mat-card-content>
+                                            </mat-card>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <mat-card>
+                                                <mat-card-header>Valor por Cada Sede y Centro</mat-card-header>
+                                                <mat-card-content class="content-icon">
+                                                    <button class="boton-icon" (click)="valorSede()"><mat-icon class="mat-icon">money</mat-icon></button>
+                                                </mat-card-content>
+                                            </mat-card>
+                                        </div>
+                                      
+                                        <div class="col-md-3">
+                                            <mat-card>
+                                                <mat-card-header>Historial de Inventarios</mat-card-header>
+                                                <mat-card-content class="content-icon">
+                                                    <button class="boton-icon" (click)="historialInventarios()"><mat-icon class="mat-icon"> folder_open</mat-icon></button>
+                                                </mat-card-content>
+                                            </mat-card>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <mat-card>
+                                                <mat-card-header>Asignar Responsable</mat-card-header>
+                                                <mat-card-content class="content-icon">
+                                                    <button class="boton-icon" (click)="asignarResponsable()"><mat-icon class="mat-icon">supervised_user_circle</mat-icon></button>
+                                                </mat-card-content>
+                                            </mat-card>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        
+                                        <div class="col-md-3">
+                                            <mat-card>
+                                                <mat-card-header>Préstamos y Reparaciones</mat-card-header>
+                                                <mat-card-content class="content-icon">
+                                                    <button class="boton-icon" (click)="prestamosReparaciones()"><mat-icon class="mat-icon">build</mat-icon></button>
+                                                </mat-card-content>
+                                            </mat-card>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <mat-card>
+                                                <mat-card-header>Historial de Activos</mat-card-header>
+                                                <mat-card-content class="content-icon">
+                                                    <button class="boton-icon" (click)="historialActivos()"><mat-icon class="mat-icon"> business_center</mat-icon></button>
+                                                </mat-card-content>
+                                            </mat-card>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <mat-card>
+                                                <mat-card-header>Resumen General</mat-card-header>
+                                                <mat-card-content class="content-icon">
+                                                    <button class="boton-icon" (click)="resumenGeneral()"><mat-icon class="mat-icon"> pie_chart</mat-icon></button>
+                                                </mat-card-content>
+                                            </mat-card>
+                                        </div>
+                                    </div>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+
+    </div>
+</div>
+
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin">
+    <p style="color: white; text-align: center; ">Cargando... </p>
+</ngx-spinner>

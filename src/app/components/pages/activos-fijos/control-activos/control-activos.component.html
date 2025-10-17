@@ -1,0 +1,800 @@
+<div class="container-fluid">
+    <!-- ventana nro 3 - salida -->
+    <div class="grid-container">
+
+        <div class="title">Control de Activos Fijos</div>
+
+        <div class="find">
+            <form class="auditoriaForm" [formGroup]="formulario" #formDirective="ngForm" (ngSubmit)="guardarRegistro()">
+                <mat-card>
+                    <mat-card-header>
+                        Cabecera
+                    </mat-card-header>
+                    <mat-card-content>
+                        <div class="findcol1">
+                            <div class="padre">
+                                <div class="caja24">
+                                    <mat-form-field class="example-form-field" appearance="fill">
+                                        <mat-label>Seleccionar Empresa *</mat-label>
+                                        <mat-select formControlName="Empresa" [disabled]="dataFijar.empresa"
+                                            (selectionChange)="selectEmpresa($event.value)">
+                                            <mat-option *ngFor="let item of dataEmpresas"
+                                                [value]="item.codEmpresa">{{item.desEmpresa}}</mat-option>
+                                        </mat-select>
+                                        <mat-error
+                                            *ngIf="this.f['Empresa'].errors && this.f['Empresa'].errors!['required'] && submitForm">
+                                            El nombre de la empresa <strong>requerido</strong>
+                                        </mat-error>
+                                    </mat-form-field>
+                                    <mat-checkbox class="example-margin" [checked]="dataFijar.empresa"
+                                        (change)="FijarCabecera($event, 'empresa')">Fijar
+                                    </mat-checkbox>
+                                </div>
+                                <div class="caja24">
+                                    <mat-form-field class="example-form-field" appearance="fill">
+                                        <mat-label>Seleccionar Sede *</mat-label>
+                                        <mat-select formControlName="Sede" [disabled]="dataFijar.sede">
+                                            <mat-option *ngFor="let item of dataSedes"
+                                                [value]="item.codEstablecimiento">{{item.desEstablecimiento}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <mat-checkbox class="example-margin" [checked]="dataFijar.sede"
+                                        (change)="FijarCabecera($event, 'sede')">Fijar
+                                    </mat-checkbox>
+                                </div>
+                            </div>
+                            <div class="padre">
+                                <div class="caja24">
+                                    <mat-form-field class="example-full-width2" appearance="fill">
+                                        <mat-label>Piso *</mat-label>
+                                        <input matInput formControlName="Piso" [readonly]="dataFijar.piso">
+                                    </mat-form-field>
+                                    <mat-checkbox class="example-margin" [checked]="dataFijar.piso"
+                                        (change)="FijarCabecera($event, 'piso')">Fijar
+                                    </mat-checkbox>
+                                </div>
+                                <div class="caja24">
+                                    <ng-select [items]="dataAreas" style="width: 100%;" bindLabel="desArea"
+                                        bindValue="desArea" [multiple]="false" [searchable]="true" placeholder="Area *"
+                                        (change)="changeArea($event)" formControlName="Area">
+                                    </ng-select>
+                                    <mat-checkbox class="example-margin" [checked]="dataFijar.area"
+                                        (change)="FijarCabecera($event, 'area')">Fijar
+                                    </mat-checkbox>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="findcol1">
+                            <div class="padre">
+                                <div class="caja24">
+                                    <mat-form-field class="example-full-width" appearance="fill">
+                                        <mat-label>Centro Costo *</mat-label>
+                                        <input matInput formControlName="Ccosto" (input)="escanearCentro()"
+                                            [readonly]="dataFijar.centro">
+                                    </mat-form-field>
+                                    <mat-checkbox class="example-margin" [checked]="dataFijar.centro"
+                                        (change)="FijarCabecera($event, 'centro')">Fijar
+                                    </mat-checkbox>
+                                </div>
+                                <div class="caja24">
+                                    <mat-form-field class="example-full-width" appearance="fill">
+                                        <mat-label>Tasa de Depreciación %</mat-label>
+                                        <input matInput formControlName="tasaDepreciacion" type="number"
+                                            [readonly]="dataFijar.tasaDepreciacion">
+                                    </mat-form-field>
+                                    <mat-checkbox class="example-margin" [checked]="dataFijar.tasaDepreciacion"
+                                        (change)="FijarCabecera($event, 'tasaDepreciacion')">Fijar
+                                    </mat-checkbox>
+                                    <!-- <mat-form-field class="example-full-width" appearance="fill">
+                                        <mat-label>Ubicación</mat-label>
+                                        <input matInput formControlName="Ubicacion" [readonly]="dataFijar.ubicacion">
+                                    </mat-form-field>
+                                    <mat-checkbox class="example-margin" (change)="FijarCabecera($event, 'ubicacion')"
+                                        >Fijar
+                                    </mat-checkbox> -->
+                                </div>
+                            </div>
+                            <div class="padre">
+                                <div class="caja24">
+                                    <mat-form-field class="example-full-width" appearance="fill">
+                                        <mat-label>Responsable *</mat-label>
+                                        <input matInput formControlName="Responsable"
+                                            [readonly]="dataFijar.responsable">
+                                    </mat-form-field>
+                                    <mat-checkbox class="example-margin" [checked]="dataFijar.responsable"
+                                        (change)="FijarCabecera($event, 'responsable')">Fijar
+                                    </mat-checkbox>
+                                </div>
+                                <div class="caja24">
+                                    <mat-form-field class="example-full-width" appearance="fill">
+                                        <mat-label>Usuario *</mat-label>
+                                        <input matInput formControlName="Usuario" [readonly]="dataFijar.usuario">
+                                    </mat-form-field>
+                                    <mat-checkbox class="example-margin" [checked]="dataFijar.usuario"
+                                        (change)="FijarCabecera($event, 'usuario')">Fijar
+                                    </mat-checkbox>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                        <div class="findcol1">
+                            <div class="padre">
+                                <div class="caja24">
+                                    <mat-form-field class="example-form-field" appearance="fill">
+                                        <mat-label>Clase Activo *</mat-label>
+                                        <mat-select (selectionChange)="CambiarContenidoDetalle($event.value)"
+                                            formControlName="ClaseAct" [disabled]="dataFijar.clase">
+                                            <mat-option *ngFor="let item of ClaseActivos"
+                                                [value]="item.codCategoria">{{item.nombreCategoria}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <mat-checkbox class="example-margin" [checked]="dataFijar.clase"
+                                        (change)="FijarCabecera($event, 'clase')">Fijar
+                                    </mat-checkbox>
+                                </div>
+                                <div class="caja24">
+                                    <mat-form-field class="example-full-width codAct" appearance="fill">
+                                        <mat-label>Cod. Activo *</mat-label>
+                                        <input matInput formControlName="CodAct" maxlength="9" type="text"
+                                            (input)="verificarEditar()">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="padre">
+                                <div class="caja241">
+                                    <!-- <mat-form-field class="example-full-width" appearance="fill">
+                                        <mat-label>Descripción</mat-label>
+                                        <input matInput formControlName="Descripcion" [readonly]="dataFijar.descripcion">
+                                    </mat-form-field> -->
+                                    <ng-select [items]="dataDescripcion" style="width: 100%;" bindLabel="descripcion"
+                                        bindValue="descripcion" [multiple]="false" [searchable]="true"
+                                        placeholder="Descripcion *" (change)="changeDescripcion($event)"
+                                        formControlName="Descripcion">
+                                    </ng-select>
+                                    <mat-checkbox class="example-margin" [checked]="dataFijar.descripcion"
+                                        (change)="FijarCabecera($event, 'descripcion')">Fijar
+                                    </mat-checkbox>
+                                    <button mat-mini-fab color="primary"
+                                        *ngIf="codTrabajador == '9999' || codTrabajador == '3872'" type="button"
+                                        (click)="agregarDescripcion()" matTooltip="Agregar" class="agregar"
+                                        aria-label="Agregar">
+                                        <mat-icon>add</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="findcol1">
+                            <div class="padre">
+                                <div class="caja24">
+                                    <mat-form-field class="example-full-width" appearance="fill">
+                                        <mat-label>N° de Guía</mat-label>
+                                        <input matInput formControlName="nroGuia" [readonly]="dataFijar.nroGuia">
+                                    </mat-form-field>
+                                    <mat-checkbox class="example-margin" [checked]="dataFijar.nroGuia"
+                                        (change)="FijarCabecera($event, 'nroGuia')">Fijar
+                                    </mat-checkbox>
+                                </div>
+                                <div class="caja24">
+                                    <mat-form-field class="example-form-field" appearance="fill">
+                                        <mat-label>Tipo Activo</mat-label>
+                                        <mat-select (selectionChange)="selectTipoActivo($event.value)"
+                                            formControlName="tipoActivo" [disabled]="dataFijar.tipoActivo">
+                                            <mat-option value=1 [disabled]="esMejora">Activo Fijo Padre</mat-option>
+                                            <mat-option value=2>Activo Fijo Hijo</mat-option>
+                                            <mat-option value=3>Activo Fijo Nieto</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <mat-checkbox class="example-margin" [checked]="dataFijar.tipoActivo"
+                                        (change)="FijarCabecera($event, 'tipoActivo')">Fijar
+                                    </mat-checkbox>
+                                </div>
+                            </div>
+                            <div class="padre">
+                                <div class="caja24">
+                                    <mat-form-field class="example-full-width" appearance="fill">
+                                        <mat-label>Tiempo de Vida Útil</mat-label>
+                                        <input matInput type="text" maxlength="3" formControlName="tiempoVidaUtil"
+                                            [readonly]="dataFijar.tiempoVidaUtil">
+                                    </mat-form-field>
+                                    <mat-checkbox class="example-margin" [checked]="dataFijar.tiempoVidaUtil"
+                                        (change)="FijarCabecera($event, 'tiempoVidaUtil')">Fijar
+                                    </mat-checkbox>
+                                </div>
+                                <div class="caja24">
+                                    <mat-form-field class="example-form-field" appearance="fill">
+                                        <mat-label>Tipo de Vida Útil</mat-label>
+                                        <mat-select formControlName="tipoVidaUtil" [disabled]="dataFijar.tipoVidaUtil">
+                                            <mat-option value="1">Meses</mat-option>
+                                            <mat-option value="2">Años</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <mat-checkbox class="example-margin"
+                                        (change)="FijarCabecera($event, 'tipoVidaUtil')"
+                                        [checked]="dataFijar.tipoVidaUtil">Fijar
+                                    </mat-checkbox>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="findcol1">
+                            <div class="padre">
+                                <div class="caja24">
+                                    <mat-form-field class="example-full-width" appearance="fill">
+                                        <mat-label>Fecha de Alta de Activo</mat-label>
+                                        <input matInput formControlName="fechaAltaActivo" type="date"
+                                            [readonly]="dataFijar.fechaAltaActivo">
+                                    </mat-form-field>
+                                    <mat-checkbox class="example-margin" [checked]="dataFijar.fechaAltaActivo"
+                                        (change)="FijarCabecera($event, 'fechaAltaActivo')">Fijar
+                                    </mat-checkbox>
+                                </div>
+                                <div class="caja24">
+                                    <mat-form-field class="example-full-width" appearance="fill">
+                                        <mat-label>Valor Activo S/.</mat-label>
+                                        <input matInput formControlName="precioTotal" type="number"
+                                            [readonly]="dataFijar.precioTotal">
+                                    </mat-form-field>
+                                    <mat-checkbox class="example-margin" [checked]="dataFijar.precioTotal"
+                                        (change)="FijarCabecera($event, 'precioTotal')">Fijar
+                                    </mat-checkbox>
+
+                                </div>
+                            </div>
+                            <div class="padre">
+                                <div class="caja24" *ngIf="mostrarRelacionado">
+                                    <mat-form-field class="example-full-width" appearance="fill">
+                                        <mat-label>Asociar Cod. Padre/ Hijo</mat-label>
+                                        <input matInput formControlName="codActivoRelacionado"
+                                            (input)="verificarRelacionado()" maxlength="9" type="text"
+                                            [readonly]="dataFijar.codActivoRelacionado">
+                                    </mat-form-field>
+                                    <mat-checkbox class="example-margin" [checked]="dataFijar.codActivoRelacionado"
+                                        (change)="FijarCabecera($event, 'codActivoRelacionado')">Fijar
+                                    </mat-checkbox>
+                                </div>
+                                <div class="caja24">
+                                    <mat-checkbox class="example-margin" (change)="mostrarMejora($event)"
+                                        formControlName="mejora" [checked]="dataFijar.mejora">Es una Mejora?
+                                    </mat-checkbox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="findcol1">
+                            <div class="caja24">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Ubicación</mat-label>
+                                    <input matInput formControlName="Ubicacion" required>
+                                </mat-form-field>
+                            </div>
+                            <div class="caja24" *ngIf="esMejora">
+                                <mat-form-field class="example-full-width">
+                                    <mat-label>Descripción Mejora</mat-label>
+                                    <textarea formControlName="descripcionMejora" matInput
+                                        placeholder="Ingresa una descripción..."></textarea>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="findcol1">
+                            <div class="caja24">
+                                <mat-form-field class="example-form-field" appearance="fill">
+                                    <mat-label>Moneda</mat-label>
+                                    <mat-select formControlName="moneda">
+                                        <mat-option value="SOL">SOL</mat-option>
+                                        <mat-option value="USD">USD</mat-option>
+                                        <mat-option value="EUR">EUR</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="caja24" *ngIf="mostrarNuevo">
+                                <mat-form-field class="example-full-width codAct" appearance="fill">
+                                    <mat-label>Nuevo Cod. Activo *</mat-label>
+                                    <input matInput formControlName="nuevoCodActivo" maxlength="12" (change)="changeCodActivo($event)" type="text">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+
+                <mat-card>
+                    <mat-card-header>
+                        Detalle
+                    </mat-card-header>
+                    <mat-card-content *ngIf="detalleCategoria.vehiculos">
+                        <div class="findcol1">
+
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Marca</mat-label>
+                                    <input matInput formControlName="Marca" [readonly]="dataFijar.marca">
+                                </mat-form-field>
+                                <mat-checkbox class="example-margin" (change)="FijarCabecera($event, 'marca')"
+                                    [checked]="dataFijar.marca">Fijar
+                                </mat-checkbox>
+                            </div>
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Modelo</mat-label>
+                                    <input matInput formControlName="Modelo" [readonly]="dataFijar.modelo">
+                                </mat-form-field>
+                                <mat-checkbox class="example-margin" [checked]="dataFijar.modelo"
+                                    (change)="FijarCabecera($event, 'modelo')">Fijar
+                                </mat-checkbox>
+                            </div>
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Serie Motor</mat-label>
+                                    <input matInput formControlName="Motor" [readonly]="dataFijar.motor">
+                                </mat-form-field>
+                                <mat-checkbox class="example-margin" [checked]="dataFijar.motor"
+                                    (change)="FijarCabecera($event, 'motor')">Fijar
+                                </mat-checkbox>
+                            </div>
+                        </div>
+                        <div class="findcol1">
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Serie Chasis</mat-label>
+                                    <input matInput formControlName="Chasis" [readonly]="dataFijar.chasis">
+                                </mat-form-field>
+                                <mat-checkbox class="example-margin" [checked]="dataFijar.chasis"
+                                    (change)="FijarCabecera($event, 'chasis')">Fijar
+                                </mat-checkbox>
+                            </div>
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Placa</mat-label>
+                                    <input matInput formControlName="Placa" maxlength="7" [readonly]="dataFijar.placa">
+                                </mat-form-field>
+                                <mat-checkbox class="example-margin" [checked]="dataFijar.placa"
+                                    (change)="FijarCabecera($event, 'placa')">Fijar
+                                </mat-checkbox>
+                            </div>
+                            <div class="caja">
+                                <mat-form-field class="example-form-field" appearance="fill">
+                                    <mat-label>Color</mat-label>
+                                    <mat-select formControlName="Color" [disabled]="dataFijar.color">
+                                        <mat-option *ngFor="let item of dataColor"
+                                            [value]="item.codColor">{{item.desColor}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-checkbox class="example-margin" [checked]="dataFijar.color"
+                                    (change)="FijarCabecera($event, 'color')">Fijar
+                                </mat-checkbox>
+                            </div>
+                            <div class="caja">
+                                <mat-form-field class="example-form-field" appearance="fill">
+                                    <mat-label>Tipo Combustible</mat-label>
+                                    <mat-select formControlName="Combustible" [disabled]="dataFijar.combustible">
+                                        <mat-option *ngFor="let item of dataCombustible"
+                                            [value]="item.codTipComb">{{item.desTipComb}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-checkbox class="example-margin" [checked]="dataFijar.combustible"
+                                    (change)="FijarCabecera($event, 'combustible')">Fijar
+                                </mat-checkbox>
+                            </div>
+                        </div>
+                        <div class="findcol1">
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Tipo de Caja</mat-label>
+                                    <mat-select formControlName="Caja" [disabled]="dataFijar.caja">
+                                        <mat-option *ngFor="let Caja of dataCaja" [value]="Caja.codTipCaja">
+                                            {{Caja.desTipCaja}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-checkbox class="example-margin" [checked]="dataFijar.caja"
+                                    (change)="FijarCabecera($event, 'caja')">Fijar
+                                </mat-checkbox>
+                            </div>
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Cant. Asiento</mat-label>
+                                    <mat-select formControlName="Asiento" [disabled]="dataFijar.asiento">
+                                        <mat-option *ngFor="let Asiento of dataAsiento" [value]="Asiento.codNumAsiento">
+                                            {{Asiento.numAsiento}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-checkbox class="example-margin" [checked]="dataFijar.asiento"
+                                    (change)="FijarCabecera($event, 'asiento')">Fijar
+                                </mat-checkbox>
+                            </div>
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Año</mat-label>
+                                    <input matInput formControlName="Fabricacion" type="date"
+                                        [readonly]="dataFijar.fabricacion">
+                                </mat-form-field>
+                                <mat-checkbox class="example-margin" [checked]="dataFijar.fabricacion"
+                                    (change)="FijarCabecera($event, 'fabricacion')">Fijar
+                                </mat-checkbox>
+                            </div>
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Cant. Ejes</mat-label>
+                                    <mat-select formControlName="Ejes" [disabled]="dataFijar.ejes">
+                                        <mat-option *ngFor="let Ejes of dataEje" [value]="Ejes.codNumEje">
+                                            {{Ejes.numEje}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-checkbox class="example-margin" [checked]="dataFijar.ejes"
+                                    (change)="FijarCabecera($event, 'ejes')">Fijar
+                                </mat-checkbox>
+                            </div>
+                        </div>
+                        <div class="findcol1">
+
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Observación</mat-label>
+                                    <input matInput formControlName="Observacion" [readonly]="dataFijar.observacion">
+                                </mat-form-field>
+                                <mat-checkbox class="example-margin" [checked]="dataFijar.observacion"
+                                    (change)="FijarCabecera($event, 'observacion')">Fijar
+                                </mat-checkbox>
+                            </div>
+                        </div>
+
+                    </mat-card-content>
+                    <mat-card-content *ngIf="detalleCategoria.muebles">
+                        <div class="findcol1">
+
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Color</mat-label>
+                                    <mat-select formControlName="Color" [disabled]="dataFijar.color">
+                                        <mat-option *ngFor="let item of dataColor"
+                                            [value]="item.codColor">{{item.desColor}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-checkbox class="example-margin" [checked]="dataFijar.color"
+                                    (change)="FijarCabecera($event, 'color')">Fijar
+                                </mat-checkbox>
+                            </div>
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Medidas</mat-label>
+                                    <input matInput formControlName="Medidas" [readonly]="dataFijar.medidas">
+                                </mat-form-field>
+                                <mat-checkbox class="example-margin" [checked]="dataFijar.medidas"
+                                    (change)="FijarCabecera($event, 'medidas')">Fijar
+                                </mat-checkbox>
+                            </div>
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Estado Fisico</mat-label>
+                                    <mat-select formControlName="Estado" [disabled]="dataFijar.estado">
+                                        <mat-option *ngFor="let Estado of dataEstado" [value]="Estado.codEstado">
+                                            {{Estado.desEstado}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-checkbox class="example-margin" [checked]="dataFijar.estado"
+                                    (change)="FijarCabecera($event, 'estado')">Fijar
+                                </mat-checkbox>
+                            </div>
+
+                        </div>
+                        <div class="findcol1">
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Uso/Desuso</mat-label>
+                                    <mat-select formControlName="Uso" [disabled]="dataFijar.uso">
+                                        <mat-option *ngFor="let Uso of dataUso" [value]="Uso.codUsoDesuso">
+                                            {{Uso.desUsoDesuso}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-checkbox class="example-margin" [checked]="dataFijar.uso"
+                                    (change)="FijarCabecera($event, 'uso')">Fijar
+                                </mat-checkbox>
+                            </div>
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Observación</mat-label>
+                                    <input matInput formControlName="Observacion" [readonly]="dataFijar.observacion">
+                                </mat-form-field>
+                                <mat-checkbox class="example-margin" [checked]="dataFijar.observacion"
+                                    (change)="FijarCabecera($event, 'observacion')">Fijar
+                                </mat-checkbox>
+                            </div>
+                        </div>
+
+                    </mat-card-content>
+
+                    <mat-card-content
+                        *ngIf="detalleCategoria.computo || detalleCategoria.comunicaciones || detalleCategoria.laboratorio || detalleCategoria.energia || detalleCategoria.electrodomesticos || detalleCategoria.maquinas_industriales || detalleCategoria.diversos">
+                        <div class="findcol1">
+
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Marca</mat-label>
+                                    <input matInput formControlName="Marca" [readonly]="dataFijar.marca">
+                                </mat-form-field>
+                                <mat-checkbox class="example-margin" [checked]="dataFijar.marca"
+                                    (change)="FijarCabecera($event, 'marca')">Fijar
+                                </mat-checkbox>
+                            </div>
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Modelo</mat-label>
+                                    <input matInput formControlName="Modelo" [readonly]="dataFijar.modelo">
+                                </mat-form-field>
+                                <mat-checkbox class="example-margin" [checked]="dataFijar.modelo"
+                                    (change)="FijarCabecera($event, 'modelo')">Fijar
+                                </mat-checkbox>
+                            </div>
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Serie</mat-label>
+                                    <input matInput formControlName="Serie" [readonly]="dataFijar.serie">
+                                </mat-form-field>
+                                <!-- <mat-checkbox class="example-margin" [checked]="dataFijar.serie" (change)="FijarCabecera($event, 'serie')"
+                                    >Fijar
+                                </mat-checkbox> -->
+                            </div>
+
+                        </div>
+                        <div class="findcol1">
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Estado Fisico</mat-label>
+                                    <mat-select formControlName="Estado" [disabled]="dataFijar.estado">
+                                        <mat-option *ngFor="let Estado of dataEstado" [value]="Estado.codEstado">
+                                            {{Estado.desEstado}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-checkbox class="example-margin" [checked]="dataFijar.estado"
+                                    (change)="FijarCabecera($event, 'estado')">Fijar
+                                </mat-checkbox>
+                            </div>
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Uso/Desuso</mat-label>
+                                    <mat-select formControlName="Uso" [disabled]="dataFijar.uso">
+                                        <mat-option *ngFor="let Uso of dataUso" [value]="Uso.codUsoDesuso">
+                                            {{Uso.desUsoDesuso}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-checkbox class="example-margin" [checked]="dataFijar.uso"
+                                    (change)="FijarCabecera($event, 'uso')">Fijar
+                                </mat-checkbox>
+                            </div>
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Observación</mat-label>
+                                    <input matInput formControlName="Observacion" [readonly]="dataFijar.observacion">
+                                </mat-form-field>
+                                <mat-checkbox class="example-margin" [checked]="dataFijar.observacion"
+                                    (change)="FijarCabecera($event, 'observacion')">Fijar
+                                </mat-checkbox>
+                            </div>
+                        </div>
+                        <div class="findcol1" *ngIf="formulario.get('Descripcion')?.value == 'CELULAR'">
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>N° de Celular</mat-label>
+                                    <input matInput formControlName="celular">
+                                </mat-form-field>
+                            </div>
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>IMEI Identificador</mat-label>
+                                    <input matInput formControlName="imei">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="findcol1"
+                            *ngIf="formulario.get('Descripcion')?.value == 'EXTINTOR DE PQS' || formulario.get('Descripcion')?.value == 'EXTINTOR DE CO2' || formulario.get('Descripcion')?.value == 'EXTINTOR DE ACETATO DE POTACIO' || formulario.get('Descripcion')?.value == 'EXTINTOR DE AGUA PRESURIZADA'">
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Fecha de Vencimiento</mat-label>
+                                    <input matInput type="date" formControlName="fechaVencimiento">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="findcol1" *ngIf="detalleCategoria.maquinas_industriales">
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Capacidad</mat-label>
+                                    <input matInput formControlName="capacidad">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="findcol1"
+                            *ngIf="formulario.get('Descripcion')?.value == 'BALANZA ELECTRONICA' || formulario.get('Descripcion')?.value == 'BALANZA DE PRESICION' || formulario.get('Descripcion')?.value == 'CONDENSADOR' || formulario.get('Descripcion')?.value == 'BALON DE OXIGENO'">
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Capacidad</mat-label>
+                                    <input matInput formControlName="capacidad">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="findcol1"
+                            *ngIf="formulario.get('Descripcion')?.value == 'AIRE ACONDICIONADO TIPO SPLIT' || formulario.get('Descripcion')?.value == 'AIRE ACONDICIONADO TIPO DUCTO' || formulario.get('Descripcion')?.value == 'AIRE ACONDICIONADO TIPO COMPACTO' || formulario.get('Descripcion')?.value == 'CONDENSADOR' || formulario.get('Descripcion')?.value == 'TANQUE DE AIRE COMPRIMIDO' || formulario.get('Descripcion')?.value == 'TANQUE ABLANDADOR'">
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Capacidad</mat-label>
+                                    <input matInput formControlName="capacidad">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="findcol1"
+                            *ngIf="formulario.get('Descripcion')?.value == 'RACK PESADO DE METAL' || formulario.get('Descripcion')?.value == 'GABINETE CONTRA INCENDIOS' || formulario.get('Descripcion')?.value == 'CAMPANA EXTRACTORA' || formulario.get('Descripcion')?.value == 'CAJA FUERTE'">
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Medidas</mat-label>
+                                    <input matInput formControlName="medidas">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="findcol1" *ngIf="detalleCategoria.energia">
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Medidas</mat-label>
+                                    <input matInput formControlName="Medidas" [readonly]="dataFijar.medidas">
+                                </mat-form-field>
+                                <mat-checkbox class="example-margin" (change)="FijarCabecera($event, 'medidas')"
+                                    [checked]="dataFijar.medidas">Fijar
+                                </mat-checkbox>
+                            </div>
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Capacidad</mat-label>
+                                    <input matInput formControlName="Capacidad">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                    </mat-card-content>
+
+
+                    <mat-card-content *ngIf="detalleCategoria.otros">
+                        <div class="findcol1">
+
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Marca</mat-label>
+                                    <input matInput formControlName="Marca" [readonly]="dataFijar.marca">
+                                </mat-form-field>
+                                <mat-checkbox class="example-margin" [checked]="dataFijar.marca"
+                                    (change)="FijarCabecera($event, 'marca')">Fijar
+                                </mat-checkbox>
+                            </div>
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Modelo</mat-label>
+                                    <input matInput formControlName="Modelo" [readonly]="dataFijar.modelo">
+                                </mat-form-field>
+                                <mat-checkbox class="example-margin" [checked]="dataFijar.modelo"
+                                    (change)="FijarCabecera($event, 'modelo')">Fijar
+                                </mat-checkbox>
+                            </div>
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Color</mat-label>
+                                    <mat-select formControlName="Color" [disabled]="dataFijar.color">
+                                        <mat-option *ngFor="let item of dataColor"
+                                            [value]="item.codColor">{{item.desColor}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-checkbox class="example-margin" [checked]="dataFijar.color"
+                                    (change)="FijarCabecera($event, 'color')">Fijar
+                                </mat-checkbox>
+                            </div>
+                        </div>
+                        <div class="findcol1">
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Año</mat-label>
+                                    <input matInput formControlName="Fabricacion" [readonly]="dataFijar.fabricacion">
+                                </mat-form-field>
+                                <mat-checkbox class="example-margin" [checked]="dataFijar.fabricacion"
+                                    (change)="FijarCabecera($event, 'fabricacion')">Fijar
+                                </mat-checkbox>
+                            </div>
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Medidas</mat-label>
+                                    <input matInput formControlName="Medidas" [readonly]="dataFijar.medidas">
+                                </mat-form-field>
+                                <mat-checkbox class="example-margin" [checked]="dataFijar.medidas"
+                                    (change)="FijarCabecera($event, 'medidas')">Fijar
+                                </mat-checkbox>
+                            </div>
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Estado Fisico</mat-label>
+                                    <mat-select formControlName="Estado" [disabled]="dataFijar.estado">
+                                        <mat-option *ngFor="let Estado of dataEstado" [value]="Estado.codEstado">
+                                            {{Estado.desEstado}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-checkbox class="example-margin" [checked]="dataFijar.estado"
+                                    (change)="FijarCabecera($event, 'estado')">Fijar
+                                </mat-checkbox>
+                            </div>
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Uso/Desuso</mat-label>
+                                    <mat-select formControlName="Uso" [disabled]="dataFijar.uso">
+                                        <mat-option *ngFor="let Uso of dataUso" [value]="Uso.codUsoDesuso">
+                                            {{Uso.desUsoDesuso}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-checkbox class="example-margin" [checked]="dataFijar.uso"
+                                    (change)="FijarCabecera($event, 'uso')">Fijar
+                                </mat-checkbox>
+                            </div>
+                        </div>
+                        <div class="findcol1">
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Observación</mat-label>
+                                    <input matInput formControlName="Observacion" [readonly]="dataFijar.observacion">
+                                </mat-form-field>
+                                <mat-checkbox class="example-margin" [checked]="dataFijar.observacion"
+                                    (change)="FijarCabecera($event, 'observacion')">Fijar
+                                </mat-checkbox>
+                            </div>
+                        </div>
+
+                    </mat-card-content>
+
+                    <mat-card-footer>
+                        <div class="findcol1">
+                            <div class="caja" *ngIf="tipo == 1">
+                                <button type="submit" class="button_agregar" [disabled]="deshabilitar" mat-flat-button
+                                    color="primary">
+                                    <mat-icon aria-label="person">save
+                                    </mat-icon> Guardar
+                                </button>
+
+                            </div>
+                            <div class="caja" *ngIf="tipo == 2">
+                                <button type="submit" class="button_agregar" [disabled]="deshabilitar" mat-flat-button
+                                    color="primary">
+                                    <mat-icon aria-label="person">update
+                                    </mat-icon> Actualizar
+                                </button>
+
+                            </div>
+                            <div class="caja">
+                                <button type="button" class="button_info" (click)="nuevoRegistro()" mat-flat-button
+                                    color="primary">
+                                    <mat-icon aria-label="person">cached
+                                    </mat-icon> Nuevo
+                                </button>
+                            </div>
+                        </div>
+                    </mat-card-footer>
+                </mat-card>
+            </form>
+
+
+        </div>
+
+
+
+
+    </div>
+</div>

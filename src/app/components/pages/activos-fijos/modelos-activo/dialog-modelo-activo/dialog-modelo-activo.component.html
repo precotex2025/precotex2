@@ -1,0 +1,31 @@
+<div class="container-fluid">
+    <!-- ventana nro 4 - historial -->
+    <div class="grid-container">
+        <!-- *ngIf="Titulo == undefined; else titulomodificar" -->
+        <div class="title">{{cabecera}}</div>
+        <div class="body">
+            <form class="container-cuerpo" [formGroup]="formulario">
+                <div class="fila1">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Modelo</mat-label>
+                        <input matInput type="text" placeholder="Modelo" autocomplete="off" formControlName="modelo"/>
+                    </mat-form-field>    
+                </div>  
+            </form>
+        </div>
+
+        <div class="footer">
+            <button class="button-dialog" mat-flat-button type="button" (click)="guardarInformacion()" [disabled]="!formulario.valid">
+                <mat-icon aria-label="person" >check
+                </mat-icon>{{boton}}
+
+            </button>
+            <button class="button-cancelar"  mat-flat-button type="button" mat-dialog-close>
+                <mat-icon aria-label="person">highlight_off
+                </mat-icon>
+                CANCELAR</button>
+        </div>
+    </div>
+  
+  </div>
+  

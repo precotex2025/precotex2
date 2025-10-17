@@ -1,0 +1,191 @@
+<div class="container-fluid">
+    <!-- ventana nro 3 - salida -->
+    <div class="grid-container">
+
+        <div class="title">Baja de Activos</div>
+
+        <div class="find">
+            <div class="auditoriaForm">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <mat-card>
+                                <mat-card-header>
+                                    <div class="row content" style="width: 100%;">
+                                        <div class="col-md-9 col-xs-12">
+                                            <span style="font-weight: bold;">Seleccionar Activos
+                                            </span>
+                                        </div>
+                                        <div class="col-md-3 col-xs-12 close">
+                                            <button mat-raised-button class="button-cancel" (click)="regresar()"
+                                                color="primary">
+                                                <mat-icon>keyboard_arrow_left</mat-icon> REGRESAR
+                                            </button>
+                                        </div>
+                                    </div>
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <mat-form-field class="example-full-width2" appearance="fill">
+                                                <mat-label>Código Activo</mat-label>
+                                                <input matInput placeholder="Ingresa Cód. Activo" maxlength="9"
+                                                    [(ngModel)]="codActivo">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3 col-xs-12 close">
+                                            <button mat-raised-button class="button-info-add"
+                                                (click)="agregarDataTabla()" color="primary">
+                                                <mat-icon>add</mat-icon> Agregar
+                                            </button>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <button mat-raised-button class="button-success" (click)="irHistorial()"
+                                                color="primary">
+                                                <mat-icon>insert_drive_file</mat-icon> Historial de Bajas
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12 tabla mt-3">
+                                            <table mat-table class="mat-elevation-z8" #table [dataSource]="dataSource">
+                                                <ng-container matColumnDef="codActivo">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Cod.
+                                                        Activo</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                        {{data_det.codActivo}} </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="tipoActivo">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Tipo
+                                                        Activo</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                        <ng-container *ngIf="data_det.tipoActivo == 1">
+                                                            ACTIVO FIJO PADRE
+                                                        </ng-container>
+                                                        <ng-container *ngIf="data_det.tipoActivo == 2">
+                                                            ACTIVO FIJO HIJO
+                                                        </ng-container>
+                                                        <ng-container *ngIf="data_det.tipoActivo == 3">
+                                                            ACTIVO FIJO NIETO
+                                                        </ng-container>
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="claseActivo">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Clase
+                                                        Activo</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                        {{data_det.claseActivo}} </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="nomResponsable">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">
+                                                        Responsable</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                        {{data_det.nomResponsable}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="empresa">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">
+                                                        Empresa</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                        {{data_det.empresa}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="acciones">
+                                                    <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+
+                                                        <a mat-icon-button (click)="EliminarRegistro(data_det)">
+                                                            <mat-icon color="warn">delete</mat-icon>
+                                                        </a>
+                                                    </td>
+                                                </ng-container>
+
+                                                <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                                                <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+
+                                                <!-- Row shown when there is no matching data. -->
+                                                <tr class="mat-row" *matNoDataRow>
+                                                    <td class="mat-cell" colspan="4">No se encontraron registros</td>
+                                                </tr>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <mat-card>
+                                <mat-card-header>
+                                    <strong>Dar de Baja</strong>
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label for="" class="mb-1">Tipo de Baja</label>
+                                            <mat-form-field class="example-form-field" appearance="fill">
+                                                <mat-label></mat-label>
+                                                <mat-select [(ngModel)]="tipoBaja">
+                                                    <mat-option value="" selected hidden>Seleccione</mat-option>
+                                                    <mat-option value="1">Por Obsolescencia (Daño Permanente o definitivo).</mat-option>
+                                                    <mat-option value="2">Por término de su vida útil contable.</mat-option>
+                                                    <mat-option value="3">Por elevado costo de reparación</mat-option>
+                                                </mat-select>
+
+                                            </mat-form-field>
+                                            <span class="text-danger" *ngIf="mostrarError && tipoBaja == ''">
+                                                Debes seleccionar el tipo de <strong>documento.</strong>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <mat-form-field class="example-full-width" >
+                                                <mat-label>Observación Baja</mat-label>
+                                                <textarea [(ngModel)]="observacionBaja" maxlength="150" matInput placeholder="Ingrese" cols="5" rows="3"></textarea>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="file" (change)="onChangeFile($event)" autocomplete="off"
+                                                class="form-control d-none" #inputFile>
+                                            <button (click)="inputFile.click()" class="button-info"
+                                                mat-flat-button><mat-icon>upload</mat-icon> Adjuntar Acta de
+                                                Baja</button>
+                                        </div>
+                                        <div class="col-md-2" *ngIf="file != undefined && file != null">
+                                            <span *ngIf="file != undefined && file != null" class="text-success">Archivo
+                                                Seleccionado: {{file.name}}</span><br>
+                                            <button *ngIf="file != undefined && file != null"
+                                                (click)="eliminarArchivo()" mat-flat-button color="warn"> Archivo
+                                                <mat-icon>delete</mat-icon></button>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <button mat-raised-button class="button-success mt-4"
+                                                (click)="guardarBajaActivos()" color="primary">
+                                                <mat-icon>save</mat-icon> Guardar Baja de Activo
+                                            </button>
+                                        </div>
+                                    </div>
+
+
+
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+
+    </div>
+</div>
+
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin">
+    <p style="color: white; text-align: center; ">Cargando... </p>
+</ngx-spinner>

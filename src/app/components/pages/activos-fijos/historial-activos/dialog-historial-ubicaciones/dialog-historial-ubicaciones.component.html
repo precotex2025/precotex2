@@ -1,0 +1,127 @@
+<div class="row caja">
+    <div class="col-md-12">
+        <mat-card>
+            <mat-card-header>
+                <div class="row" style="width: 100%;">
+                    <div class="col-md-8">
+                        <span> <strong>DATOS DEL ACTIVO</strong>
+                        </span>
+                    </div>
+                    <div class="col-md-4 close">
+                        <span aria-label="Close" class="cerrar" (click)="closeModal()" aria-hidden="true">&times;</span>
+                    </div>
+                </div>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="row">
+                    <div class="col-md-3">
+                        <span class="negrita">Descripción Activo: </span><br>
+                        <span>{{data.descripcion}}</span>
+                    </div>
+                    <div class="col-md-3">
+                        <span class="negrita">Código Activo: </span><br>
+                        <span>{{data.codActivo}}</span>
+                    </div>
+                    <div class="col-md-3">
+                        <span class="negrita">Area</span><br>
+                        <span>{{data.area}}</span>
+                    </div>
+                    <div class="col-md-3">
+                        <span class="negrita">Centro de Costo:</span><br>
+                        <span>{{data.centroCosto}}</span>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-3">
+                        <span class="negrita">Empresa:</span><br>
+                        <span>{{data.empresa}}</span>
+                    </div>
+                    <div class="col-md-3">
+                        <span class="negrita">Sede:</span><br>
+                        <span>{{data.sede}}</span>
+                    </div>
+                    <div class="col-md-3">
+                        <span class="negrita">Piso:</span><br>
+                        <span>{{data.piso}}</span>
+                    </div>
+                    <div class="col-md-3">
+                        <span class="negrita">Responsable:</span><br>
+                        <span>{{data.responsable}}</span>
+                    </div>
+                </div>
+        
+            </mat-card-content>
+        
+        </mat-card>
+        <mat-card>
+            <mat-card-header>
+                <strong>Historial de Ubicaciones</strong>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="row mt-4">
+        
+                    <div class="col-md-12 tabla mt-3">
+                        <table mat-table class="mat-elevation-z8" #table [dataSource]="dataSource">
+                            <ng-container matColumnDef="fechaRegistro">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell">
+                                    Fecha Registro</th>
+                                <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                    {{data_det.fechaRegistro | date: 'dd/MM/Y hh:mm:ss a'}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="ubicacion">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Ubicación</th>
+                                <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                    {{data_det.ubicacion}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="responsable">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Responsable</th>
+                                <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                    {{data_det.responsable}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="empresa">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Empresa</th>
+                                <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                    {{data_det.empresa}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="sede">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Sede</th>
+                                <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                    {{data_det.sede}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="area">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Area</th>
+                                <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                    {{data_det.area}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="codCenCost">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Centro Costo</th>
+                                <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                    {{data_det.codCenCost}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="nomUsuario">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Nombre Usuario</th>
+                                <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                    {{data_det.nomUsuario}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="codUsuario">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Usuario Registro</th>
+                                <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                    {{data_det.codUsuario}} </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                            <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+        
+                            <!-- Row shown when there is no matching data. -->
+                            <tr class="mat-row" *matNoDataRow>
+                                <td class="mat-cell" colspan="4">No se encontraron registros</td>
+                            </tr>
+                        </table>
+        
+                    </div>
+                </div>
+        
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

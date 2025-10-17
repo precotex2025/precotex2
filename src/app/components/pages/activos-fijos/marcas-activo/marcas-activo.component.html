@@ -1,0 +1,73 @@
+<div class="container-fluid">
+    <!-- ventana nro 3 - salida -->
+    <div class="grid-container">
+
+        <div class="title">Marcas Activos</div>
+
+        <div class="find">
+            <div class="auditoriaForm">
+                <div class="row">
+                    <div class="col-md-3">
+                        <mat-form-field class="fila1-buscar" appearance="fill">
+                            <mat-label>Buscar</mat-label>
+                            <input matInput type="text" (keyup)="applyFilter($event)">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="fila1-excel" color="primary" mat-flat-button
+                            (click)="agregarMarca()">
+                            <mat-icon aria-label="person">file_copy</mat-icon>Crear Nuevo
+                        </button>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 tabla">
+                        <table mat-table class="mat-elevation-z8" #table [dataSource]="dataSource">
+                            <ng-container matColumnDef="idMarca">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Id</th>
+                                <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                    {{data_det.idMarca}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="marca">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Marca</th>
+                                <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                    {{data_det.marca}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="acciones">
+                                <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                                <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                    <a mat-icon-button style="margin-right:5px;"
+                                        (click)="openModificarActivo(data_det)">
+                                        <mat-icon color="success">create</mat-icon>
+                                    </a>
+
+                                    <a mat-icon-button (click)="EliminarRegistro(data_det.idMarca)">
+                                        <mat-icon color="warn">delete</mat-icon>
+                                    </a>
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                            <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+                        </table>
+                        <mat-paginator [pageSizeOptions]="[10, 20, 40]" showFirstLastButtons
+                            aria-label="Select page of periodic elements">
+                        </mat-paginator>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+
+    </div>
+</div>
+
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin">
+    <p style="color: white; text-align: center; ">Cargando... </p>
+</ngx-spinner>

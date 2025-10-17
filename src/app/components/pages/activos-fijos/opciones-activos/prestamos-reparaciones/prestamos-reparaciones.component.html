@@ -1,0 +1,183 @@
+<div class="container-fluid">
+    <!-- ventana nro 3 - salida -->
+    <div class="grid-container">
+
+        <div class="title">Préstamos y Reparaciones</div>
+
+        <div class="find">
+            <div class="auditoriaForm">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <mat-card>
+                                <mat-card-header>
+                                    <div class="row content" style="width: 100%;">
+                                        <div class="col-md-9 col-xs-12">
+                                            <span style="font-weight: bold;">Datos
+                                            </span>
+                                        </div>
+                                        <div class="col-md-3 col-xs-12 close">
+                                            <button mat-raised-button class="button-cancel" (click)="regresar()"
+                                                color="primary">
+                                                <mat-icon>keyboard_arrow_left</mat-icon> REGRESAR
+                                            </button>
+                                        </div>
+                                    </div>
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <form (ngSubmit)="guardarPrestamo()" [formGroup]="formulario">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <mat-form-field class="example-full-width2" appearance="fill">
+                                                    <mat-label>Cód. Activo</mat-label>
+                                                    <input matInput type="text" maxlength="9" formControlName="codActivoFijo" (input)="changeCodActivo($event)">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <mat-form-field class="example-form-field" appearance="fill">
+                                                    <mat-label>Seleccionar Tipo</mat-label>
+                                                    <mat-select formControlName="tipo" (selectionChange)="changeTipo($event)">
+                                                        <mat-option value="1">Prestamos</mat-option>
+                                                        <mat-option value="2">Reparaciones</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <mat-form-field class="example-full-width2" appearance="fill">
+                                                    <mat-label>Responsable</mat-label>
+                                                    <input matInput type="text" formControlName="responsable">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <mat-form-field class="example-full-width2" appearance="fill">
+                                                    <mat-label>Proveedor</mat-label>
+                                                    <input matInput type="text" formControlName="proveedor">
+                                                </mat-form-field>
+                                            </div>
+
+                                        </div>
+                                        <div class="row mt-5" *ngIf="activo != undefined && activo != null">
+                                            <div class="col-md-12">
+                                                <mat-card>
+                                                    <mat-card-content>
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <span class="negrita">Descripción Activo: </span><br>
+                                                                <span>{{activo.descripcion}}</span>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <span class="negrita">Código Activo: </span><br>
+                                                                <span>{{activo.codActivo}}</span>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <span class="negrita">Responsable</span><br>
+                                                                <span>{{activo.nomResponsable}}</span>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <span class="negrita">Usuario:</span><br>
+                                                                <span>{{activo.nomUsuario}}</span>
+                                                            </div>
+                                                        </div>
+                                                    </mat-card-content>
+                                                </mat-card>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-5">
+                                            <div class="col-md-12">
+                                                <mat-card>
+                                                    <mat-card-header>Datos Adicionales</mat-card-header>
+                                                    <mat-card-content>
+                                                        <div class="row">
+                                                            <div class="col-md-2">
+                                                                <mat-form-field class="example-full-width2"
+                                                                    appearance="fill">
+                                                                    <mat-label>Fecha Inicio</mat-label>
+                                                                    <input matInput type="date" formControlName="fechaInicio">
+                                                                </mat-form-field>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <mat-form-field class="example-full-width2"
+                                                                    appearance="fill">
+                                                                    <mat-label>Fecha Retorno</mat-label>
+                                                                    <input matInput type="date" formControlName="fechaFin">
+                                                                </mat-form-field>
+                                                            </div>
+                                                            <div class="col-md-2" *ngIf="prestamos || reparaciones">
+                                                                <input type="file" (change)="onChangeFile($event)"
+                                                                    autocomplete="off" class="form-control d-none"
+                                                                    #inputFile>
+                                                                <button (click)="inputFile.click()"
+                                                                    class="button-info-add" type="button"
+                                                                    mat-flat-button><mat-icon>cloud_upload</mat-icon>
+                                                                    Adjuntar Guía</button>
+                                                            </div>
+                                                            <div class="col-md-2" *ngIf="file != undefined && file != null">
+                                                                <span *ngIf="file != undefined && file != null" class="text-success">Archivo Seleccionado: {{file.name}}</span><br>
+                                                                <button *ngIf="file != undefined && file != null" (click)="eliminarArchivo()" mat-flat-button color="warn"> Archivo <mat-icon>delete</mat-icon></button>
+                                                            </div>
+                                                            <div class="col-md-2" *ngIf="reparaciones">
+                                                                <input type="file" (change)="onChangeFile2($event)"
+                                                                    autocomplete="off" class="form-control d-none"
+                                                                    #inputFile2>
+                                                                <button (click)="inputFile2.click()" 
+                                                                    class="button-warning" type="button"
+                                                                    mat-flat-button><mat-icon>cloud_upload</mat-icon>
+                                                                    Adjuntar Orden</button>
+                                                            </div>
+                                                            <div class="col-md-2" *ngIf="file2 != undefined && file2 != null">
+                                                                <span *ngIf="file2 != undefined && file2 != null" class="text-success">Archivo Seleccionado: {{file2.name}}</span><br>
+                                                                <button *ngIf="file2 != undefined && file2 != null" (click)="eliminarArchivo2()" mat-flat-button color="warn"> Archivo <mat-icon>delete</mat-icon></button>
+                                                            </div>
+                                                            <div class="col-md-3" *ngIf="prestamos">
+                                                                <input type="file" (change)="onChangeFile3($event)"
+                                                                    autocomplete="off" class="form-control d-none"
+                                                                    #inputFile3>
+                                                                <button (click)="inputFile3.click()"
+                                                                    class="button-orange" type="button"
+                                                                    mat-flat-button><mat-icon>cloud_upload</mat-icon>
+                                                                    Adjuntar Contrato de Préstamo</button>
+                                                            </div>
+                                                            <div class="col-md-2" *ngIf="file3 != undefined && file3 != null">
+                                                                <span *ngIf="file3 != undefined && file3 != null" class="text-success">Archivo Seleccionado: {{file3.name}}</span><br>
+                                                                <button *ngIf="file3 != undefined && file3 != null" (click)="eliminarArchivo3()" mat-flat-button color="warn"> Archivo <mat-icon>delete</mat-icon></button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <button class="button-success" type="submit"
+                                                                    mat-flat-button><mat-icon>save</mat-icon>
+                                                                    Guardar</button>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <button class="button-info-add" type="button" (click)="irHistorial()"
+                                                                    mat-flat-button><mat-icon>assignment</mat-icon>
+                                                                    Historial Préstamos/Reparaciones</button>
+                                                            </div>
+                                                        </div>
+                                                    </mat-card-content>
+                                                </mat-card>
+                                            </div>
+
+                                        </div>
+
+                                    </form>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+
+    </div>
+</div>
+
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin">
+    <p style="color: white; text-align: center; ">Cargando... </p>
+</ngx-spinner>

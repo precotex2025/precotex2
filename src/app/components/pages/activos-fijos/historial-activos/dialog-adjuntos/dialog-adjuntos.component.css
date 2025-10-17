@@ -1,0 +1,53 @@
+mat-card {
+    margin-top: 10px;
+    padding: 0px;
+}
+
+mat-card-header {
+    padding: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, .4);
+}
+
+mat-card-content {
+    margin-top: 10px;
+    padding: 10px 15px;
+}
+
+.close{
+    text-align: right;
+}
+
+.cerrar{
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.negrita{
+    font-weight: 500;
+}
+
+.button-info{
+    margin-top: 10px;
+    background: #2B78E4;
+    width: 98%;
+    color: white;
+}
+
+.button-info-add{
+    margin-top: 10px;
+    background: #2B78E4;
+    width: 98%;
+    color: white;
+}
+
+.button-success{
+    margin-top: 10px;
+    background:  #0e740e;
+    width: 98%;
+    color: white;
+}
+@media screen and (max-width: 750px) {
+    .caja{
+        overflow-y: scroll;
+    }
+}

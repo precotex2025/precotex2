@@ -1,0 +1,106 @@
+<div class="container-fluid">
+    <!-- ventana nro 3 - salida -->
+    <div class="grid-container">
+
+        <div class="title">Factor de Calificación: Sol (Supervisor de Seguridad)</div>
+
+        <div class="find">
+            <div class="auditoriaForm">
+                <div class="row">
+                    <div class="col-md-12">
+                        <mat-card>
+                            <mat-card-header>
+                                Seleccionar Supervisor Seguridad
+                            </mat-card-header>
+                            <mat-card-content>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <ng-select [items]="dataAgentes" style="width: 100%;"
+                                            bindLabel="nombreTrabajador" bindValue="codTrabajador" [multiple]="false"
+                                            [searchable]="true" (change)="seleccionarAgente($event)"
+                                            placeholder="Sup. de Seguridad *">
+                                        </ng-select>
+                                    </div>
+                                    <div class="col-md-3 mt-1">
+                                        <button type="button" class="fila1-excel" color="primary" mat-flat-button
+                                            (click)="agregarDescripcion()">
+                                            <mat-icon aria-label="person">file_copy</mat-icon>Crear Evaluación
+                                        </button>
+                                    </div>
+                                    <div class="col-md-3 mt-1">
+                                        <button type="button" class="fila1-info" color="primary" mat-flat-button
+                                            (click)="generarReporte()">
+                                            <mat-icon aria-label="person">list_alt</mat-icon> Reportes
+                                        </button>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+
+
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <mat-card>
+                            <mat-card-header>Evaluación Plan Sol
+                            </mat-card-header>
+                            <mat-card-content>
+                                <div class="row">
+                                    <div class="col-md-12 tabla">
+                                        <table mat-table class="mat-elevation-z8" #table [dataSource]="dataSource">
+                                            <ng-container matColumnDef="criterio">
+                                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Criterio
+                                                </th>
+                                                <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                    {{data_det.criterio}} </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="puntaje">
+                                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Puntaje
+                                                </th>
+                                                <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                    <!-- <mat-slide-toggle [checked]="data_det.puntaje == 5"
+                                                        [disabled]="data_det.flgEstado == 'C' || flgActivo == 'N'"
+                                                        (change)="actualizarPuntaje($event, data_det.idSolBonoDet)">Aprobar</mat-slide-toggle> -->
+
+                                                    <mat-radio-group aria-label="Select an option"
+                                                        [disabled]="data_det.flgEstado == 'C' || flgActivo == 'N'"
+                                                        (change)="actualizarPuntaje($event, data_det.idSolBonoDet)">
+                                                        <mat-radio-button value="5"
+                                                            [checked]="data_det.puntaje == 5">Aprobar</mat-radio-button>
+                                                        <mat-radio-button value="0"
+                                                            [checked]="data_det.puntaje == 0">Desaprobar</mat-radio-button>
+                                                    </mat-radio-group>
+                                                </td>
+
+
+                                            </ng-container>
+                                            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- <div class="row">
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-3">
+                                        <button type="button" class="fila1-excel" color="primary" mat-flat-button
+                                            (click)="agregarDescripcion()">
+                                            <mat-icon aria-label="person">save</mat-icon>Guardar Evaluación
+                                        </button>
+                                    </div>
+                                </div> -->
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin">
+    <p style="color: white; text-align: center; ">Cargando... </p>
+</ngx-spinner>

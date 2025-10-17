@@ -1,0 +1,83 @@
+
+<div class="container"> 
+    <div class="grid-container">
+        <div class="title">Agregar Bultos</div> 
+
+
+
+        <form class="container-cuerpo" [formGroup]="formulario">
+            
+            <div class="container-cuerpo-fila0">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Grupo : </mat-label>
+                    <input matInput placeholder="" formControlName="Codigo_grupo">
+                  </mat-form-field>          
+    
+            </div>
+            <div class="container-cuerpo-fila1">
+
+                <mat-form-field class="fila1-anadir"> 
+                    <mat-label>Añadir</mat-label>
+                    <input matInput type="text"  placeholder="Añadir" (keydown.enter)="applyEnterAdd($event)" value="" #myinputAdd
+                        autocomplete="off" formControlName="bulto_añadir" >
+                </mat-form-field>     
+                
+                
+                <button type="button" class="fila1-btn_anadir" (click)="AnadirBulto()" mat-flat-button >                    
+                    <mat-icon aria-label="person">assignment_turned_in</mat-icon>
+                </button>
+
+                <mat-form-field class="fila1-eliminar"> 
+                    <mat-label>Eliminar</mat-label>
+                    <input matInput type="text"   placeholder="Eliminar" (keydown.enter)="applyEnterDel($event)" value="" #myinputDel
+                        autocomplete="off" formControlName="bulto_eliminar" >
+                </mat-form-field>    
+
+                <button type="button" class="fila1-btn_eliminar" (click)="EliminarBulto()" mat-flat-button  >
+                <mat-icon aria-label="person">delete</mat-icon> 
+                </button>
+
+                <button type="button" class="boton-regresar" mat-flat-button (click)="Regresar()">                    
+                    <mat-icon aria-label="person">reply_all</mat-icon>
+                </button>                
+
+            </div>
+
+            <div class="container-cuerpo-fila2">
+                <table mat-table #table  [dataSource]="dataSource"   class="mat-elevation-z8" >
+
+                    <ng-container matColumnDef="bulto">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Bulto</th>
+                        <td mat-cell  *matCellDef="let data_det"> {{data_det.num_Corre}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="conos">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Cono</th>
+                        <td mat-cell  *matCellDef="let data_det"> {{data_det.cantidad_Cono}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="tara">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Tara</th>
+                        <td mat-cell  *matCellDef="let data_det"> {{data_det.peso_Tara}} </td>
+                    </ng-container>
+                    
+                    <ng-container matColumnDef="bruto">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Bruto</th>
+                        <td mat-cell  *matCellDef="let data_det"> {{data_det.peso_Bruto}} </td>
+                    </ng-container>
+                    
+                    <ng-container matColumnDef="neto">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Neto</th>
+                        <td mat-cell  *matCellDef="let data_det"> {{data_det.peso_Neto}} </td>
+                    </ng-container>    
+                    
+                    
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>                    
+
+                </table>
+            </div>
+
+        </form>
+    </div>
+</div>

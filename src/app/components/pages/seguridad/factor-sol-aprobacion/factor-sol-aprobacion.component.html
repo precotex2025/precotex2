@@ -1,0 +1,1520 @@
+<div class="container-fluid">
+    <!-- ventana nro 3 - salida -->
+    <div class="grid-container">
+
+        <div class="title">Factor de Calificación: Sol (APROBACIÓN)</div>
+
+        <div class="find">
+            <div class="auditoriaForm">
+                <div class="row">
+                    <div class="col-md-12">
+                        <mat-card>
+                            <mat-card-header>
+                                Seleccionar Periodo
+                            </mat-card-header>
+                            <mat-card-content>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <mat-form-field appearance="fill" class="mat-form-field">
+                                            <mat-label>Periodo</mat-label>
+                                            <input matInput type="month" [(ngModel)]="mesActual"
+                                                (change)="getAprobacionPeriodo()" placeholder="Seleccione"
+                                                autocomplete="off" />
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        <span>Rango de Fecha</span> <br>
+                                        <span style="color:red">{{fechaRango1}} - {{fechaRango2}}</span>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+
+
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <mat-card>
+                            <mat-card-header>Aprobaciones</mat-card-header>
+                            <mat-card-content>
+                                <mat-tab-group>
+                                    <mat-tab label="Agentes de Seguridad">
+                                        <mat-tab-group>
+                                            <mat-tab label="Semana 1">
+                                                <mat-tab-group>
+                                                    <!-- tipo 1 -->
+                                                    <mat-tab label="Administrativo Operativo">
+                                                        <div class="row mt-3">
+                                                            <div class="col-md-12">
+                                                                <div class="col-md-12 tabla">
+                                                                    <table mat-table class="mat-elevation-z8" #table
+                                                                        [dataSource]="dataSource">
+                                                                        <ng-container matColumnDef="nombresTrabajador">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Trabajador
+                                                                            </th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.nombresTrabajador}} </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="tipoUsuario">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                tipoUsuario</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <ng-container
+                                                                                    *ngIf="data_det.tipoUsuario == '1'">
+                                                                                    AGENTE DE SEGURIDAD
+                                                                                </ng-container>
+                                                                                <ng-container
+                                                                                    *ngIf="data_det.tipoUsuario == '2'">
+                                                                                    SUPERVISOR DE SEGURIDAD
+                                                                                </ng-container>
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor1">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Inducción puesto / Capacitación</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[0].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor2">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                EPPs / Uniforme</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[1].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor3">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">Materiales e
+                                                                                insumos rotulados y organizados</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[2].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor4">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Area limpia y Ordenada</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[3].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor5">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">Zonas segura y
+                                                                                equipos de emergencia sin obstrucción
+                                                                            </th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[4].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="puntaje">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Puntaje</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <ng-container
+                                                                                    *ngIf="data_det.puntaje >= 12">
+                                                                                    <span
+                                                                                        style="background-color: green; color: white; padding: 5px; min-width: 120px; display: inline-block; ">
+                                                                                        {{data_det.puntaje}}
+                                                                                    </span>
+                                                                                </ng-container>
+                                                                                <ng-container
+                                                                                    *ngIf="data_det.puntaje < 12">
+                                                                                    <span
+                                                                                        style="background-color: red; color: white; padding: 5px; min-width: 120px; display: inline-block; ">
+                                                                                        {{data_det.puntaje}}
+                                                                                    </span>
+                                                                                </ng-container>
+                                                                            </td>
+                                                                        </ng-container>
+
+                                                                        <ng-container
+                                                                            matColumnDef="aprobacionDirectora">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Aprobación Directora Auditoría</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <mat-radio-group
+                                                                                    aria-label="Select an option"
+                                                                                    [disabled]="data_det.flgEstado == 'A' || idUsuario != 240"
+                                                                                    (change)="changeAprobacion($event, 'aprobacionDirectora', data_det.idFactorSolBono)">
+                                                                                    <mat-radio-button value="1"
+                                                                                        [checked]="data_det.aprobacionDirectora == '1'">Aprobar</mat-radio-button>
+                                                                                    <mat-radio-button value="0"
+                                                                                        [checked]="data_det.aprobacionDirectora == '0'">Desaprobar</mat-radio-button>
+                                                                                </mat-radio-group>
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="aprobacionSoporte">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Aprobación Gerencia Soporte</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <mat-radio-group
+                                                                                    aria-label="Select an option"
+                                                                                    [disabled]="data_det.flgEstado == 'A' || idUsuario != 260"
+                                                                                    (change)="changeAprobacion($event, 'aprobacionSoporte', data_det.idFactorSolBono)">
+                                                                                    <mat-radio-button value="1"
+                                                                                        [checked]="data_det.aprobacionSoporte == '1'">Aprobar</mat-radio-button>
+                                                                                    <mat-radio-button value="0"
+                                                                                        [checked]="data_det.aprobacionSoporte == '0'">Desaprobar</mat-radio-button>
+                                                                                </mat-radio-group>
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="aprobacionJefe">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Aprobación Jefe</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <mat-radio-group
+                                                                                    aria-label="Select an option"
+                                                                                    [disabled]="data_det.flgEstado == 'A' || idUsuario != 10 || idUsuario != 37"
+                                                                                    (change)="changeAprobacion($event, 'aprobacionJefe', data_det.idFactorSolBono)">
+                                                                                    <mat-radio-button value="1"
+                                                                                        [checked]="data_det.aprobacionJefe == '1'">Aprobar</mat-radio-button>
+                                                                                    <mat-radio-button value="0"
+                                                                                        [checked]="data_det.aprobacionJefe == '0'">Desaprobar</mat-radio-button>
+                                                                                </mat-radio-group>
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <tr mat-header-row
+                                                                            *matHeaderRowDef="columnsToDisplay;sticky: true">
+                                                                        </tr>
+                                                                        <tr mat-row
+                                                                            *matRowDef="let row; columns: columnsToDisplay;">
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </mat-tab>
+
+                                                    <!-- tipo 2 -->
+                                                    <mat-tab label="Administrativo No Operativo">
+                                                        <div class="row mt-3">
+                                                            <div class="col-md-12">
+                                                                <div class="col-md-12 tabla">
+                                                                    <table mat-table class="mat-elevation-z8" #table
+                                                                        [dataSource]="dataSource2">
+                                                                        <ng-container matColumnDef="nombresTrabajador">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Trabajador
+                                                                            </th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.nombresTrabajador}} </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="tipoUsuario">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                tipoUsuario</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <ng-container
+                                                                                    *ngIf="data_det.tipoUsuario == '1'">
+                                                                                    AGENTE DE SEGURIDAD
+                                                                                </ng-container>
+                                                                                <ng-container
+                                                                                    *ngIf="data_det.tipoUsuario == '2'">
+                                                                                    SUPERVISOR DE SEGURIDAD
+                                                                                </ng-container>
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor1">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Inducción puesto / Capacitación</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[0].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor2">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">Materiales e
+                                                                                insumos rotulados y organizados</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[1].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor3">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Area limpia y Ordenada</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[2].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor4">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">Zonas segura y
+                                                                                equipos de emergencia sin obstrucción
+                                                                            </th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[3].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="puntaje">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Puntaje</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <ng-container
+                                                                                    *ngIf="data_det.puntaje >= 12">
+                                                                                    <span
+                                                                                        style="background-color: green; color: white; padding: 5px; min-width: 120px; display: inline-block; ">
+                                                                                        {{data_det.puntaje}}
+                                                                                    </span>
+                                                                                </ng-container>
+                                                                                <ng-container
+                                                                                    *ngIf="data_det.puntaje < 12">
+                                                                                    <span
+                                                                                        style="background-color: red; color: white; padding: 5px; min-width: 120px; display: inline-block; ">
+                                                                                        {{data_det.puntaje}}
+                                                                                    </span>
+                                                                                </ng-container>
+                                                                            </td>
+                                                                        </ng-container>
+
+                                                                        <ng-container
+                                                                            matColumnDef="aprobacionDirectora">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Aprobación Directora Auditoría</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <mat-radio-group
+                                                                                    aria-label="Select an option"
+                                                                                    [disabled]="data_det.flgEstado == 'A' || idUsuario != 240"
+                                                                                    (change)="changeAprobacion($event, 'aprobacionDirectora', data_det.idFactorSolBono)">
+                                                                                    <mat-radio-button value="1"
+                                                                                        [checked]="data_det.aprobacionDirectora == '1'">Aprobar</mat-radio-button>
+                                                                                    <mat-radio-button value="0"
+                                                                                        [checked]="data_det.aprobacionDirectora == '0'">Desaprobar</mat-radio-button>
+                                                                                </mat-radio-group>
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="aprobacionSoporte">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Aprobación Gerencia Soporte</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <mat-radio-group
+                                                                                    aria-label="Select an option"
+                                                                                    [disabled]="data_det.flgEstado == 'A' || idUsuario != 260"
+                                                                                    (change)="changeAprobacion($event, 'aprobacionSoporte', data_det.idFactorSolBono)">
+                                                                                    <mat-radio-button value="1"
+                                                                                        [checked]="data_det.aprobacionSoporte == '1'">Aprobar</mat-radio-button>
+                                                                                    <mat-radio-button value="0"
+                                                                                        [checked]="data_det.aprobacionSoporte == '0'">Desaprobar</mat-radio-button>
+                                                                                </mat-radio-group>
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="aprobacionJefe">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Aprobación Jefe</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <mat-radio-group
+                                                                                    aria-label="Select an option"
+                                                                                    [disabled]="data_det.flgEstado == 'A' || idUsuario != 10 || idUsuario != 37"
+                                                                                    (change)="changeAprobacion($event, 'aprobacionJefe', data_det.idFactorSolBono)">
+                                                                                    <mat-radio-button value="1"
+                                                                                        [checked]="data_det.aprobacionJefe == '1'">Aprobar</mat-radio-button>
+                                                                                    <mat-radio-button value="0"
+                                                                                        [checked]="data_det.aprobacionJefe == '0'">Desaprobar</mat-radio-button>
+                                                                                </mat-radio-group>
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <tr mat-header-row
+                                                                            *matHeaderRowDef="columnsToDisplay2;sticky: true">
+                                                                        </tr>
+                                                                        <tr mat-row
+                                                                            *matRowDef="let row; columns: columnsToDisplay2;">
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </mat-tab>
+                                                </mat-tab-group>
+
+                                            </mat-tab>
+                                            <mat-tab label="Semana 2">
+                                                <mat-tab-group>
+                                                    <!-- tipo 1 -->
+                                                    <mat-tab label="Administrativo Operativo">
+                                                        <div class="row mt-3">
+                                                            <div class="col-md-12">
+                                                                <div class="col-md-12 tabla">
+                                                                    <table mat-table class="mat-elevation-z8" #table
+                                                                        [dataSource]="dataSource11">
+                                                                        <ng-container matColumnDef="nombresTrabajador">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Trabajador
+                                                                            </th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.nombresTrabajador}} </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="tipoUsuario">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                tipoUsuario</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <ng-container
+                                                                                    *ngIf="data_det.tipoUsuario == '1'">
+                                                                                    AGENTE DE SEGURIDAD
+                                                                                </ng-container>
+                                                                                <ng-container
+                                                                                    *ngIf="data_det.tipoUsuario == '2'">
+                                                                                    SUPERVISOR DE SEGURIDAD
+                                                                                </ng-container>
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor1">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Inducción puesto / Capacitación</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[0].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor2">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                EPPs / Uniforme</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[1].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor3">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">Materiales e
+                                                                                insumos rotulados y organizados</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[2].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor4">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Area limpia y Ordenada</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[3].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor5">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">Zonas segura y
+                                                                                equipos de emergencia sin obstrucción
+                                                                            </th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[4].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="puntaje">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Puntaje</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <ng-container
+                                                                                    *ngIf="data_det.puntaje >= 12">
+                                                                                    <span
+                                                                                        style="background-color: green; color: white; padding: 5px; min-width: 120px; display: inline-block; ">
+                                                                                        {{data_det.puntaje}}
+                                                                                    </span>
+                                                                                </ng-container>
+                                                                                <ng-container
+                                                                                    *ngIf="data_det.puntaje < 12">
+                                                                                    <span
+                                                                                        style="background-color: red; color: white; padding: 5px; min-width: 120px; display: inline-block; ">
+                                                                                        {{data_det.puntaje}}
+                                                                                    </span>
+                                                                                </ng-container>
+                                                                            </td>
+                                                                        </ng-container>
+
+                                                                        <ng-container
+                                                                            matColumnDef="aprobacionDirectora">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Aprobación Directora Auditoría</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <mat-radio-group
+                                                                                    aria-label="Select an option"
+                                                                                    [disabled]="data_det.flgEstado == 'A' || idUsuario != 240"
+                                                                                    (change)="changeAprobacion($event, 'aprobacionDirectora', data_det.idFactorSolBono)">
+                                                                                    <mat-radio-button value="1"
+                                                                                        [checked]="data_det.aprobacionDirectora == '1'">Aprobar</mat-radio-button>
+                                                                                    <mat-radio-button value="0"
+                                                                                        [checked]="data_det.aprobacionDirectora == '0'">Desaprobar</mat-radio-button>
+                                                                                </mat-radio-group>
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="aprobacionSoporte">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Aprobación Gerencia Soporte</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <mat-radio-group
+                                                                                    aria-label="Select an option"
+                                                                                    [disabled]="data_det.flgEstado == 'A' || idUsuario != 260"
+                                                                                    (change)="changeAprobacion($event, 'aprobacionSoporte', data_det.idFactorSolBono)">
+                                                                                    <mat-radio-button value="1"
+                                                                                        [checked]="data_det.aprobacionSoporte == '1'">Aprobar</mat-radio-button>
+                                                                                    <mat-radio-button value="0"
+                                                                                        [checked]="data_det.aprobacionSoporte == '0'">Desaprobar</mat-radio-button>
+                                                                                </mat-radio-group>
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="aprobacionJefe">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Aprobación Jefe</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <mat-radio-group
+                                                                                    aria-label="Select an option"
+                                                                                    [disabled]="data_det.flgEstado == 'A' || idUsuario != 10 || idUsuario != 37"
+                                                                                    (change)="changeAprobacion($event, 'aprobacionJefe', data_det.idFactorSolBono)">
+                                                                                    <mat-radio-button value="1"
+                                                                                        [checked]="data_det.aprobacionJefe == '1'">Aprobar</mat-radio-button>
+                                                                                    <mat-radio-button value="0"
+                                                                                        [checked]="data_det.aprobacionJefe == '0'">Desaprobar</mat-radio-button>
+                                                                                </mat-radio-group>
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <tr mat-header-row
+                                                                            *matHeaderRowDef="columnsToDisplay;sticky: true">
+                                                                        </tr>
+                                                                        <tr mat-row
+                                                                            *matRowDef="let row; columns: columnsToDisplay;">
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </mat-tab>
+
+                                                    <!-- tipo 2 -->
+                                                    <mat-tab label="Administrativo No Operativo">
+                                                        <div class="row mt-3">
+                                                            <div class="col-md-12">
+                                                                <div class="col-md-12 tabla">
+                                                                    <table mat-table class="mat-elevation-z8" #table
+                                                                        [dataSource]="dataSourceo">
+                                                                        <ng-container matColumnDef="nombresTrabajador">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Trabajador
+                                                                            </th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.nombresTrabajador}} </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="tipoUsuario">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                tipoUsuario</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <ng-container
+                                                                                    *ngIf="data_det.tipoUsuario == '1'">
+                                                                                    AGENTE DE SEGURIDAD
+                                                                                </ng-container>
+                                                                                <ng-container
+                                                                                    *ngIf="data_det.tipoUsuario == '2'">
+                                                                                    SUPERVISOR DE SEGURIDAD
+                                                                                </ng-container>
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor1">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Inducción puesto / Capacitación</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[0].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor2">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">Materiales e
+                                                                                insumos rotulados y organizados</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[1].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor3">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Area limpia y Ordenada</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[2].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor4">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">Zonas segura y
+                                                                                equipos de emergencia sin obstrucción
+                                                                            </th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[3].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="puntaje">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Puntaje</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <ng-container
+                                                                                    *ngIf="data_det.puntaje >= 12">
+                                                                                    <span
+                                                                                        style="background-color: green; color: white; padding: 5px; min-width: 120px; display: inline-block; ">
+                                                                                        {{data_det.puntaje}}
+                                                                                    </span>
+                                                                                </ng-container>
+                                                                                <ng-container
+                                                                                    *ngIf="data_det.puntaje < 12">
+                                                                                    <span
+                                                                                        style="background-color: red; color: white; padding: 5px; min-width: 120px; display: inline-block; ">
+                                                                                        {{data_det.puntaje}}
+                                                                                    </span>
+                                                                                </ng-container>
+                                                                            </td>
+                                                                        </ng-container>
+
+                                                                        <ng-container
+                                                                            matColumnDef="aprobacionDirectora">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Aprobación Directora Auditoría</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <mat-radio-group
+                                                                                    aria-label="Select an option"
+                                                                                    [disabled]="data_det.flgEstado == 'A' || idUsuario != 240"
+                                                                                    (change)="changeAprobacion($event, 'aprobacionDirectora', data_det.idFactorSolBono)">
+                                                                                    <mat-radio-button value="1"
+                                                                                        [checked]="data_det.aprobacionDirectora == '1'">Aprobar</mat-radio-button>
+                                                                                    <mat-radio-button value="0"
+                                                                                        [checked]="data_det.aprobacionDirectora == '0'">Desaprobar</mat-radio-button>
+                                                                                </mat-radio-group>
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="aprobacionSoporte">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Aprobación Gerencia Soporte</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <mat-radio-group
+                                                                                    aria-label="Select an option"
+                                                                                    [disabled]="data_det.flgEstado == 'A' || idUsuario != 260"
+                                                                                    (change)="changeAprobacion($event, 'aprobacionSoporte', data_det.idFactorSolBono)">
+                                                                                    <mat-radio-button value="1"
+                                                                                        [checked]="data_det.aprobacionSoporte == '1'">Aprobar</mat-radio-button>
+                                                                                    <mat-radio-button value="0"
+                                                                                        [checked]="data_det.aprobacionSoporte == '0'">Desaprobar</mat-radio-button>
+                                                                                </mat-radio-group>
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="aprobacionJefe">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Aprobación Jefe</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <mat-radio-group
+                                                                                    aria-label="Select an option"
+                                                                                    [disabled]="data_det.flgEstado == 'A' || idUsuario != 10 || idUsuario != 37"
+                                                                                    (change)="changeAprobacion($event, 'aprobacionJefe', data_det.idFactorSolBono)">
+                                                                                    <mat-radio-button value="1"
+                                                                                        [checked]="data_det.aprobacionJefe == '1'">Aprobar</mat-radio-button>
+                                                                                    <mat-radio-button value="0"
+                                                                                        [checked]="data_det.aprobacionJefe == '0'">Desaprobar</mat-radio-button>
+                                                                                </mat-radio-group>
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <tr mat-header-row
+                                                                            *matHeaderRowDef="columnsToDisplay2;sticky: true">
+                                                                        </tr>
+                                                                        <tr mat-row
+                                                                            *matRowDef="let row; columns: columnsToDisplay2;">
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </mat-tab>
+                                                </mat-tab-group>
+                                            </mat-tab>
+                                            <mat-tab label="Semana 3">
+                                                <mat-tab-group>
+                                                    <!-- tipo 1 -->
+                                                    <mat-tab label="Administrativo Operativo">
+                                                        <div class="row mt-3">
+                                                            <div class="col-md-12">
+                                                                <div class="col-md-12 tabla">
+                                                                    <table mat-table class="mat-elevation-z8" #table
+                                                                        [dataSource]="dataSource12">
+                                                                        <ng-container matColumnDef="nombresTrabajador">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Trabajador
+                                                                            </th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.nombresTrabajador}} </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="tipoUsuario">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                tipoUsuario</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <ng-container
+                                                                                    *ngIf="data_det.tipoUsuario == '1'">
+                                                                                    AGENTE DE SEGURIDAD
+                                                                                </ng-container>
+                                                                                <ng-container
+                                                                                    *ngIf="data_det.tipoUsuario == '2'">
+                                                                                    SUPERVISOR DE SEGURIDAD
+                                                                                </ng-container>
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor1">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Inducción puesto / Capacitación</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[0].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor2">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                EPPs / Uniforme</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[1].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor3">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">Materiales e
+                                                                                insumos rotulados y organizados</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[2].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor4">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Area limpia y Ordenada</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[3].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor5">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">Zonas segura y
+                                                                                equipos de emergencia sin obstrucción
+                                                                            </th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[4].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="puntaje">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Puntaje</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <ng-container
+                                                                                    *ngIf="data_det.puntaje >= 12">
+                                                                                    <span
+                                                                                        style="background-color: green; color: white; padding: 5px; min-width: 120px; display: inline-block; ">
+                                                                                        {{data_det.puntaje}}
+                                                                                    </span>
+                                                                                </ng-container>
+                                                                                <ng-container
+                                                                                    *ngIf="data_det.puntaje < 12">
+                                                                                    <span
+                                                                                        style="background-color: red; color: white; padding: 5px; min-width: 120px; display: inline-block; ">
+                                                                                        {{data_det.puntaje}}
+                                                                                    </span>
+                                                                                </ng-container>
+                                                                            </td>
+                                                                        </ng-container>
+
+                                                                        <ng-container
+                                                                            matColumnDef="aprobacionDirectora">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Aprobación Directora Auditoría</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <mat-radio-group
+                                                                                    aria-label="Select an option"
+                                                                                    [disabled]="data_det.flgEstado == 'A' || idUsuario != 240"
+                                                                                    (change)="changeAprobacion($event, 'aprobacionDirectora', data_det.idFactorSolBono)">
+                                                                                    <mat-radio-button value="1"
+                                                                                        [checked]="data_det.aprobacionDirectora == '1'">Aprobar</mat-radio-button>
+                                                                                    <mat-radio-button value="0"
+                                                                                        [checked]="data_det.aprobacionDirectora == '0'">Desaprobar</mat-radio-button>
+                                                                                </mat-radio-group>
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="aprobacionSoporte">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Aprobación Gerencia Soporte</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <mat-radio-group
+                                                                                    aria-label="Select an option"
+                                                                                    [disabled]="data_det.flgEstado == 'A' || idUsuario != 260"
+                                                                                    (change)="changeAprobacion($event, 'aprobacionSoporte', data_det.idFactorSolBono)">
+                                                                                    <mat-radio-button value="1"
+                                                                                        [checked]="data_det.aprobacionSoporte == '1'">Aprobar</mat-radio-button>
+                                                                                    <mat-radio-button value="0"
+                                                                                        [checked]="data_det.aprobacionSoporte == '0'">Desaprobar</mat-radio-button>
+                                                                                </mat-radio-group>
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="aprobacionJefe">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Aprobación Jefe</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <mat-radio-group
+                                                                                    aria-label="Select an option"
+                                                                                    [disabled]="data_det.flgEstado == 'A' || idUsuario != 10 || idUsuario != 37"
+                                                                                    (change)="changeAprobacion($event, 'aprobacionJefe', data_det.idFactorSolBono)">
+                                                                                    <mat-radio-button value="1"
+                                                                                        [checked]="data_det.aprobacionJefe == '1'">Aprobar</mat-radio-button>
+                                                                                    <mat-radio-button value="0"
+                                                                                        [checked]="data_det.aprobacionJefe == '0'">Desaprobar</mat-radio-button>
+                                                                                </mat-radio-group>
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <tr mat-header-row
+                                                                            *matHeaderRowDef="columnsToDisplay;sticky: true">
+                                                                        </tr>
+                                                                        <tr mat-row
+                                                                            *matRowDef="let row; columns: columnsToDisplay;">
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </mat-tab>
+
+                                                    <!-- tipo 2 -->
+                                                    <mat-tab label="Administrativo No Operativo">
+                                                        <div class="row mt-3">
+                                                            <div class="col-md-12">
+                                                                <div class="col-md-12 tabla">
+                                                                    <table mat-table class="mat-elevation-z8" #table
+                                                                        [dataSource]="dataSource12o">
+                                                                        <ng-container matColumnDef="nombresTrabajador">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Trabajador
+                                                                            </th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.nombresTrabajador}} </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="tipoUsuario">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                tipoUsuario</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <ng-container
+                                                                                    *ngIf="data_det.tipoUsuario == '1'">
+                                                                                    AGENTE DE SEGURIDAD
+                                                                                </ng-container>
+                                                                                <ng-container
+                                                                                    *ngIf="data_det.tipoUsuario == '2'">
+                                                                                    SUPERVISOR DE SEGURIDAD
+                                                                                </ng-container>
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor1">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Inducción puesto / Capacitación</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[0].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor2">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">Materiales e
+                                                                                insumos rotulados y organizados</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[1].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor3">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Area limpia y Ordenada</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[2].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor4">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">Zonas segura y
+                                                                                equipos de emergencia sin obstrucción
+                                                                            </th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[3].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="puntaje">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Puntaje</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <ng-container
+                                                                                    *ngIf="data_det.puntaje >= 12">
+                                                                                    <span
+                                                                                        style="background-color: green; color: white; padding: 5px; min-width: 120px; display: inline-block; ">
+                                                                                        {{data_det.puntaje}}
+                                                                                    </span>
+                                                                                </ng-container>
+                                                                                <ng-container
+                                                                                    *ngIf="data_det.puntaje < 12">
+                                                                                    <span
+                                                                                        style="background-color: red; color: white; padding: 5px; min-width: 120px; display: inline-block; ">
+                                                                                        {{data_det.puntaje}}
+                                                                                    </span>
+                                                                                </ng-container>
+                                                                            </td>
+                                                                        </ng-container>
+
+                                                                        <ng-container
+                                                                            matColumnDef="aprobacionDirectora">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Aprobación Directora Auditoría</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <mat-radio-group
+                                                                                    aria-label="Select an option"
+                                                                                    [disabled]="data_det.flgEstado == 'A' || idUsuario != 240"
+                                                                                    (change)="changeAprobacion($event, 'aprobacionDirectora', data_det.idFactorSolBono)">
+                                                                                    <mat-radio-button value="1"
+                                                                                        [checked]="data_det.aprobacionDirectora == '1'">Aprobar</mat-radio-button>
+                                                                                    <mat-radio-button value="0"
+                                                                                        [checked]="data_det.aprobacionDirectora == '0'">Desaprobar</mat-radio-button>
+                                                                                </mat-radio-group>
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="aprobacionSoporte">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Aprobación Gerencia Soporte</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <mat-radio-group
+                                                                                    aria-label="Select an option"
+                                                                                    [disabled]="data_det.flgEstado == 'A' || idUsuario != 260"
+                                                                                    (change)="changeAprobacion($event, 'aprobacionSoporte', data_det.idFactorSolBono)">
+                                                                                    <mat-radio-button value="1"
+                                                                                        [checked]="data_det.aprobacionSoporte == '1'">Aprobar</mat-radio-button>
+                                                                                    <mat-radio-button value="0"
+                                                                                        [checked]="data_det.aprobacionSoporte == '0'">Desaprobar</mat-radio-button>
+                                                                                </mat-radio-group>
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="aprobacionJefe">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Aprobación Jefe</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <mat-radio-group
+                                                                                    aria-label="Select an option"
+                                                                                    [disabled]="data_det.flgEstado == 'A' || idUsuario != 10 || idUsuario != 37"
+                                                                                    (change)="changeAprobacion($event, 'aprobacionJefe', data_det.idFactorSolBono)">
+                                                                                    <mat-radio-button value="1"
+                                                                                        [checked]="data_det.aprobacionJefe == '1'">Aprobar</mat-radio-button>
+                                                                                    <mat-radio-button value="0"
+                                                                                        [checked]="data_det.aprobacionJefe == '0'">Desaprobar</mat-radio-button>
+                                                                                </mat-radio-group>
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <tr mat-header-row
+                                                                            *matHeaderRowDef="columnsToDisplay2;sticky: true">
+                                                                        </tr>
+                                                                        <tr mat-row
+                                                                            *matRowDef="let row; columns: columnsToDisplay2;">
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </mat-tab>
+                                                </mat-tab-group>
+                                            </mat-tab>
+                                            <mat-tab label="Semana 4">
+                                                <mat-tab-group>
+                                                    <!-- tipo 1 -->
+                                                    <mat-tab label="Administrativo Operativo">
+                                                        <div class="row mt-3">
+                                                            <div class="col-md-12">
+                                                                <div class="col-md-12 tabla">
+                                                                    <table mat-table class="mat-elevation-z8" #table
+                                                                        [dataSource]="dataSource13">
+                                                                        <ng-container matColumnDef="nombresTrabajador">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Trabajador
+                                                                            </th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.nombresTrabajador}} </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="tipoUsuario">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                tipoUsuario</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <ng-container
+                                                                                    *ngIf="data_det.tipoUsuario == '1'">
+                                                                                    AGENTE DE SEGURIDAD
+                                                                                </ng-container>
+                                                                                <ng-container
+                                                                                    *ngIf="data_det.tipoUsuario == '2'">
+                                                                                    SUPERVISOR DE SEGURIDAD
+                                                                                </ng-container>
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor1">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Inducción puesto / Capacitación</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[0].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor2">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                EPPs / Uniforme</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[1].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor3">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">Materiales e
+                                                                                insumos rotulados y organizados</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[2].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor4">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Area limpia y Ordenada</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[3].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor5">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">Zonas segura y
+                                                                                equipos de emergencia sin obstrucción
+                                                                            </th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[4].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="puntaje">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Puntaje</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <ng-container
+                                                                                    *ngIf="data_det.puntaje >= 12">
+                                                                                    <span
+                                                                                        style="background-color: green; color: white; padding: 5px; min-width: 120px; display: inline-block; ">
+                                                                                        {{data_det.puntaje}}
+                                                                                    </span>
+                                                                                </ng-container>
+                                                                                <ng-container
+                                                                                    *ngIf="data_det.puntaje < 12">
+                                                                                    <span
+                                                                                        style="background-color: red; color: white; padding: 5px; min-width: 120px; display: inline-block; ">
+                                                                                        {{data_det.puntaje}}
+                                                                                    </span>
+                                                                                </ng-container>
+                                                                            </td>
+                                                                        </ng-container>
+
+                                                                        <ng-container
+                                                                            matColumnDef="aprobacionDirectora">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Aprobación Directora Auditoría</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <mat-radio-group
+                                                                                    aria-label="Select an option"
+                                                                                    [disabled]="data_det.flgEstado == 'A' || idUsuario != 240"
+                                                                                    (change)="changeAprobacion($event, 'aprobacionDirectora', data_det.idFactorSolBono)">
+                                                                                    <mat-radio-button value="1"
+                                                                                        [checked]="data_det.aprobacionDirectora == '1'">Aprobar</mat-radio-button>
+                                                                                    <mat-radio-button value="0"
+                                                                                        [checked]="data_det.aprobacionDirectora == '0'">Desaprobar</mat-radio-button>
+                                                                                </mat-radio-group>
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="aprobacionSoporte">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Aprobación Gerencia Soporte</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <mat-radio-group
+                                                                                    aria-label="Select an option"
+                                                                                    [disabled]="data_det.flgEstado == 'A' || idUsuario != 260"
+                                                                                    (change)="changeAprobacion($event, 'aprobacionSoporte', data_det.idFactorSolBono)">
+                                                                                    <mat-radio-button value="1"
+                                                                                        [checked]="data_det.aprobacionSoporte == '1'">Aprobar</mat-radio-button>
+                                                                                    <mat-radio-button value="0"
+                                                                                        [checked]="data_det.aprobacionSoporte == '0'">Desaprobar</mat-radio-button>
+                                                                                </mat-radio-group>
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="aprobacionJefe">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Aprobación Jefe</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <mat-radio-group
+                                                                                    aria-label="Select an option"
+                                                                                    [disabled]="data_det.flgEstado == 'A' || idUsuario != 10 || idUsuario != 37"
+                                                                                    (change)="changeAprobacion($event, 'aprobacionJefe', data_det.idFactorSolBono)">
+                                                                                    <mat-radio-button value="1"
+                                                                                        [checked]="data_det.aprobacionJefe == '1'">Aprobar</mat-radio-button>
+                                                                                    <mat-radio-button value="0"
+                                                                                        [checked]="data_det.aprobacionJefe == '0'">Desaprobar</mat-radio-button>
+                                                                                </mat-radio-group>
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <tr mat-header-row
+                                                                            *matHeaderRowDef="columnsToDisplay;sticky: true">
+                                                                        </tr>
+                                                                        <tr mat-row
+                                                                            *matRowDef="let row; columns: columnsToDisplay;">
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </mat-tab>
+
+                                                    <!-- tipo 2 -->
+                                                    <mat-tab label="Administrativo No Operativo">
+                                                        <div class="row mt-3">
+                                                            <div class="col-md-12">
+                                                                <div class="col-md-12 tabla">
+                                                                    <table mat-table class="mat-elevation-z8" #table
+                                                                        [dataSource]="dataSource13o">
+                                                                        <ng-container matColumnDef="nombresTrabajador">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Trabajador
+                                                                            </th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.nombresTrabajador}} </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="tipoUsuario">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                tipoUsuario</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <ng-container
+                                                                                    *ngIf="data_det.tipoUsuario == '1'">
+                                                                                    AGENTE DE SEGURIDAD
+                                                                                </ng-container>
+                                                                                <ng-container
+                                                                                    *ngIf="data_det.tipoUsuario == '2'">
+                                                                                    SUPERVISOR DE SEGURIDAD
+                                                                                </ng-container>
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor1">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Inducción puesto / Capacitación</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[0].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor2">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">Materiales e
+                                                                                insumos rotulados y organizados</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[1].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor3">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Area limpia y Ordenada</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[2].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="factor4">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">Zonas segura y
+                                                                                equipos de emergencia sin obstrucción
+                                                                            </th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                {{data_det.segFactorSolBonoDets[3].puntaje}}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="puntaje">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Puntaje</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <ng-container
+                                                                                    *ngIf="data_det.puntaje >= 12">
+                                                                                    <span
+                                                                                        style="background-color: green; color: white; padding: 5px; min-width: 120px; display: inline-block; ">
+                                                                                        {{data_det.puntaje}}
+                                                                                    </span>
+                                                                                </ng-container>
+                                                                                <ng-container
+                                                                                    *ngIf="data_det.puntaje < 12">
+                                                                                    <span
+                                                                                        style="background-color: red; color: white; padding: 5px; min-width: 120px; display: inline-block; ">
+                                                                                        {{data_det.puntaje}}
+                                                                                    </span>
+                                                                                </ng-container>
+                                                                            </td>
+                                                                        </ng-container>
+
+                                                                        <ng-container
+                                                                            matColumnDef="aprobacionDirectora">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Aprobación Directora Auditoría</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <mat-radio-group
+                                                                                    aria-label="Select an option"
+                                                                                    [disabled]="data_det.flgEstado == 'A' || idUsuario != 240"
+                                                                                    (change)="changeAprobacion($event, 'aprobacionDirectora', data_det.idFactorSolBono)">
+                                                                                    <mat-radio-button value="1"
+                                                                                        [checked]="data_det.aprobacionDirectora == '1'">Aprobar</mat-radio-button>
+                                                                                    <mat-radio-button value="0"
+                                                                                        [checked]="data_det.aprobacionDirectora == '0'">Desaprobar</mat-radio-button>
+                                                                                </mat-radio-group>
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="aprobacionSoporte">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Aprobación Gerencia Soporte</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <mat-radio-group
+                                                                                    aria-label="Select an option"
+                                                                                    [disabled]="data_det.flgEstado == 'A' || idUsuario != 260"
+                                                                                    (change)="changeAprobacion($event, 'aprobacionSoporte', data_det.idFactorSolBono)">
+                                                                                    <mat-radio-button value="1"
+                                                                                        [checked]="data_det.aprobacionSoporte == '1'">Aprobar</mat-radio-button>
+                                                                                    <mat-radio-button value="0"
+                                                                                        [checked]="data_det.aprobacionSoporte == '0'">Desaprobar</mat-radio-button>
+                                                                                </mat-radio-group>
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <ng-container matColumnDef="aprobacionJefe">
+                                                                            <th mat-header-cell *matHeaderCellDef
+                                                                                class="mat-header-cell">
+                                                                                Aprobación Jefe</th>
+                                                                            <td class="mat-header-cell" mat-cell
+                                                                                *matCellDef="let data_det">
+                                                                                <mat-radio-group
+                                                                                    aria-label="Select an option"
+                                                                                    [disabled]="data_det.flgEstado == 'A' || idUsuario != 10 || idUsuario != 37"
+                                                                                    (change)="changeAprobacion($event, 'aprobacionJefe', data_det.idFactorSolBono)">
+                                                                                    <mat-radio-button value="1"
+                                                                                        [checked]="data_det.aprobacionJefe == '1'">Aprobar</mat-radio-button>
+                                                                                    <mat-radio-button value="0"
+                                                                                        [checked]="data_det.aprobacionJefe == '0'">Desaprobar</mat-radio-button>
+                                                                                </mat-radio-group>
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <tr mat-header-row
+                                                                            *matHeaderRowDef="columnsToDisplay2;sticky: true">
+                                                                        </tr>
+                                                                        <tr mat-row
+                                                                            *matRowDef="let row; columns: columnsToDisplay2;">
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </mat-tab>
+                                                </mat-tab-group>
+                                            </mat-tab>
+                                        </mat-tab-group>
+                                    </mat-tab>
+                                    <mat-tab label="Supervisores de Seguridad">
+                                        <div class="row mt-3">
+                                            <div class="col-md-12">
+                                                <div class="col-md-12 tabla">
+                                                    <table mat-table class="mat-elevation-z8" #table
+                                                        [dataSource]="dataSupervisores">
+                                                        <ng-container matColumnDef="nombresTrabajador">
+                                                            <th mat-header-cell *matHeaderCellDef
+                                                                class="mat-header-cell">
+                                                                Trabajador
+                                                            </th>
+                                                            <td class="mat-header-cell" mat-cell
+                                                                *matCellDef="let data_det">
+                                                                {{data_det.nombresTrabajador}} </td>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="tipoUsuario">
+                                                            <th mat-header-cell *matHeaderCellDef
+                                                                class="mat-header-cell">
+                                                                tipoUsuario</th>
+                                                            <td class="mat-header-cell" mat-cell
+                                                                *matCellDef="let data_det">
+                                                                <ng-container *ngIf="data_det.tipoUsuario == '1'">
+                                                                    AGENTE DE SEGURIDAD
+                                                                </ng-container>
+                                                                <ng-container *ngIf="data_det.tipoUsuario == '2'">
+                                                                    SUPERVISOR DE SEGURIDAD
+                                                                </ng-container>
+                                                            </td>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="factor1">
+                                                            <th mat-header-cell *matHeaderCellDef
+                                                                class="mat-header-cell">
+                                                                Realizar el PLAN SOL de forma semanal</th>
+                                                            <td class="mat-header-cell" mat-cell
+                                                                *matCellDef="let data_det">
+                                                                {{data_det.segFactorSolBonoDets[0].puntaje}}
+                                                            </td>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="factor2">
+                                                            <th mat-header-cell *matHeaderCellDef
+                                                                class="mat-header-cell">
+                                                                Ingresar las calificaciones del PLAN SOL de los agentes.
+                                                            </th>
+                                                            <td class="mat-header-cell" mat-cell
+                                                                *matCellDef="let data_det">
+                                                                {{data_det.segFactorSolBonoDets[1].puntaje}}
+                                                            </td>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="factor3">
+                                                            <th mat-header-cell *matHeaderCellDef
+                                                                class="mat-header-cell">
+                                                                Mantener actualizados los resultados en las pizarras
+                                                            <th>
+                                                            <td class="mat-header-cell" mat-cell
+                                                                *matCellDef="let data_det">
+                                                                {{data_det.segFactorSolBonoDets[2].puntaje}}
+                                                            </td>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="factor4">
+                                                            <th mat-header-cell *matHeaderCellDef
+                                                                class="mat-header-cell">Elevar reportes del PLAN SOL a
+                                                                Jefatura y Gerencial</th>
+                                                            <td class="mat-header-cell" mat-cell
+                                                                *matCellDef="let data_det">
+                                                                {{data_det.segFactorSolBonoDets[3].puntaje}}
+                                                            </td>
+                                                        </ng-container>
+
+                                                        <ng-container matColumnDef="puntaje">
+                                                            <th mat-header-cell *matHeaderCellDef
+                                                                class="mat-header-cell">
+                                                                Puntaje</th>
+                                                            <td class="mat-header-cell" mat-cell
+                                                                *matCellDef="let data_det">
+                                                                <ng-container *ngIf="data_det.puntaje >= 20">
+                                                                    <span
+                                                                        style="background-color: green; color: white; padding: 5px; min-width: 120px; display: inline-block; ">
+                                                                        {{data_det.puntaje}}
+                                                                    </span>
+                                                                </ng-container>
+                                                                <ng-container *ngIf="data_det.puntaje < 20">
+                                                                    <span
+                                                                        style="background-color: red; color: white; padding: 5px; min-width: 120px; display: inline-block; ">
+                                                                        {{data_det.puntaje}}
+                                                                    </span>
+                                                                </ng-container>
+                                                            </td>
+                                                        </ng-container>
+
+                                                        <ng-container matColumnDef="aprobacionDirectora">
+                                                            <th mat-header-cell *matHeaderCellDef
+                                                                class="mat-header-cell">
+                                                                Aprobación Directora Auditoría</th>
+                                                            <td class="mat-header-cell" mat-cell
+                                                                *matCellDef="let data_det">
+                                                                <!-- <select name="aprobacionDirectora"
+                                                                    [disabled]="data_det.flgEstado == 'A'"
+                                                                    class="form-select"
+                                                                   
+                                                                    [(ngModel)]="data_det.aprobacionDirectora">
+                                                                    <option value="null" hidden>Seleccione</option>
+                                                                    <option value="1">Aprobar</option>
+                                                                    <option value="0">Desaprobar</option>
+                                                                </select> -->
+                                                                <mat-radio-group aria-label="Select an option"
+                                                                    [disabled]="data_det.flgEstado == 'A' || idUsuario != 240"
+                                                                    (change)="changeAprobacion($event, 'aprobacionDirectora', data_det.idFactorSolBono)">
+                                                                    <mat-radio-button value="1"
+                                                                        [checked]="data_det.aprobacionDirectora == '1'">Aprobar</mat-radio-button>
+                                                                    <mat-radio-button value="0"
+                                                                        [checked]="data_det.aprobacionDirectora == '0'">Desaprobar</mat-radio-button>
+                                                                </mat-radio-group>
+                                                            </td>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="aprobacionSoporte">
+                                                            <th mat-header-cell *matHeaderCellDef
+                                                                class="mat-header-cell">
+                                                                Aprobación Gerencia Soporte</th>
+                                                            <td class="mat-header-cell" mat-cell
+                                                                *matCellDef="let data_det">
+
+                                                                <mat-radio-group aria-label="Select an option"
+                                                                    [disabled]="data_det.flgEstado == 'A' || idUsuario != 260"
+                                                                    (change)="changeAprobacion($event, 'aprobacionSoporte', data_det.idFactorSolBono)">
+                                                                    <mat-radio-button value="1"
+                                                                        [checked]="data_det.aprobacionSoporte == '1'">Aprobar</mat-radio-button>
+                                                                    <mat-radio-button value="0"
+                                                                        [checked]="data_det.aprobacionSoporte == '0'">Desaprobar</mat-radio-button>
+                                                                </mat-radio-group>
+                                                            </td>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="aprobacionJefe">
+                                                            <th mat-header-cell *matHeaderCellDef
+                                                                class="mat-header-cell">
+                                                                Aprobación Jefe</th>
+                                                            <td class="mat-header-cell" mat-cell
+                                                                *matCellDef="let data_det">
+                                                                <mat-radio-group aria-label="Select an option"
+                                                                    [disabled]="data_det.flgEstado == 'A' || idUsuario != 10 || idUsuario != 37"
+                                                                    (change)="changeAprobacion($event, 'aprobacionJefe', data_det.idFactorSolBono)">
+                                                                    <mat-radio-button
+                                                                        [checked]="data_det.aprobacionJefe == '1'"
+                                                                        value="1">Aprobar</mat-radio-button>
+                                                                    <mat-radio-button value="0"
+                                                                        [checked]="data_det.aprobacionJefe == '0'">Desaprobar</mat-radio-button>
+                                                                </mat-radio-group>
+                                                            </td>
+                                                        </ng-container>
+
+                                                        <tr mat-header-row
+                                                            *matHeaderRowDef="columnsToDisplay2;sticky: true">
+                                                        </tr>
+                                                        <tr mat-row *matRowDef="let row; columns: columnsToDisplay2;">
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </mat-tab>
+                                </mat-tab-group>
+
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin">
+    <p style="color: white; text-align: center; ">Cargando... </p>
+</ngx-spinner>

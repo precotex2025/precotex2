@@ -1,0 +1,173 @@
+<div class="container-fluid">
+    <!-- ventana nro 3 - salida -->
+    <div class="grid-container">
+
+        <div class="title">Reporte de Valor por cada Sede y Centro</div>
+
+        <div class="find">
+            <div class="auditoriaForm">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <mat-card>
+                                <mat-card-header>
+                                    <div class="row content" style="width: 100%;">
+                                        <div class="col-md-9 col-xs-12">
+                                            <span style="font-weight: bold;">Reporte
+                                            </span>
+                                        </div>
+                                        <div class="col-md-3 col-xs-12 close">
+                                            <button mat-raised-button class="button-cancel" (click)="regresar()"
+                                                color="primary">
+                                                <mat-icon>keyboard_arrow_left</mat-icon> REGRESAR
+                                            </button>
+                                        </div>
+                                    </div>
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <mat-form-field class="example-form-field2"
+                                                appearance="fill">
+                                                <mat-label>Seleccionar Empresa</mat-label>
+                                                <mat-select
+                                                    (selectionChange)="selectEmpresa($event.value)"
+                                                    [(ngModel)]="codEmpresa">
+                                                    <mat-option value="" selected
+                                                        hidden>Seleccione</mat-option>
+                                                    <mat-option *ngFor="let item of dataEmpresas"
+                                                        [value]="item.codEmpresa">{{item.desEmpresa}}</mat-option>
+
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <mat-form-field class="example-form-field2"
+                                                appearance="fill">
+                                                <mat-label>Seleccionar Sede</mat-label>
+                                                <mat-select [(ngModel)]="sede">
+                                                    <mat-option value="" selected
+                                                        hidden>Seleccione</mat-option>
+                                                    <mat-option *ngFor="let item of dataSedes"
+                                                        [value]="item.codEstablecimiento">{{item.desEstablecimiento}}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <mat-form-field class="example-full-width2"
+                                                appearance="fill">
+                                                <mat-label>Área</mat-label>
+                                                <input matInput [(ngModel)]="area"
+                                                    placeholder="Ingrese " (input)="changeCentroCosto()">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <mat-form-field class="example-full-width2"
+                                                appearance="fill">
+                                                <mat-label>Centro Costo</mat-label>
+                                                <input matInput [(ngModel)]="codCenCost"
+                                                    placeholder="Ingrese Centro Costo" (input)="changeCentroCosto()">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-2 col-xs-12 close">
+                                            <button mat-raised-button class="button-info-add" (click)="buscarReporteControlActivos()"
+                                                color="primary">
+                                                <mat-icon>search</mat-icon> Buscar
+                                            </button>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button mat-raised-button class="button-success" (click)="generateExcel()"
+                                                color="primary">
+                                                <mat-icon>insert_drive_file</mat-icon> Exportar
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <p style="text-align: right;">
+                                                <strong>Total Activos: </strong> {{dataSource.data.length }} <strong>Valor Actual: </strong> {{valorTotal | number: '1.2-2'}} <strong>Valor Total: </strong> {{precioCompra | number: '1.2-2'}}
+                                            </p>
+                                        </div>
+                                        <div class="col-md-12 tabla mt-3">
+                                            <table mat-table class="mat-elevation-z8" #table [dataSource]="dataSource">
+                                                <ng-container matColumnDef="empresa">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Empresa</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                        {{data_det.empresa}} </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="area">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Area</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                        {{data_det.area}} </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="centroCosto">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Centro Costo</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                        {{data_det.centroCosto}} </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="claseActivo">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Centro Costo</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                        {{data_det.centroCosto}} </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="codActivo">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">
+                                                        Cod. Activo</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                        {{data_det.codActivo}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="descripcion">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">
+                                                        Descripción</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                        {{data_det.descripcion}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="precioTotal">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">
+                                                        Precio Total</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                        {{data_det.precioTotal}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="valorActual">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">
+                                                        Valor Actual</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                        {{data_det.valorActual}}
+                                                    </td>
+                                                </ng-container>
+                                         
+
+                                                <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                                                <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+
+                                                <!-- Row shown when there is no matching data. -->
+                                                <tr class="mat-row" *matNoDataRow>
+                                                    <td class="mat-cell" colspan="4">No se encontraron registros</td>
+                                                </tr>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </div>
+       
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+
+    </div>
+</div>
+
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin">
+    <p style="color: white; text-align: center; ">Cargando... </p>
+</ngx-spinner>

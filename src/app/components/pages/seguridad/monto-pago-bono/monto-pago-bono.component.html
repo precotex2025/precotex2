@@ -1,0 +1,51 @@
+<div class="container-fluid">
+    <!-- ventana nro 3 - salida -->
+    <div class="grid-container">
+
+        <div class="title">Factores de Calificación</div>
+
+        <div class="find">
+            <div class="auditoriaForm">
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <mat-card>
+                            <mat-card-header>Monto Pago Bono
+                            </mat-card-header>
+                            <mat-card-content>
+                                <div class="row">
+                                    <div class="col-md-12 tabla">
+                                        <table mat-table class="mat-elevation-z8" #table [dataSource]="dataSource">
+                                            <ng-container matColumnDef="codCategoria">
+                                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Categoría
+                                                </th>
+                                                <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                    {{data_det.codCategoria}} </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="factorBono">
+                                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Factor</th>
+                                                <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                    {{data_det.factorBono}} </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="montoBono">
+                                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Monto</th>
+                                                <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                    {{data_det.montoBono | number: '1.2-2'}} </td>
+                                            </ng-container>
+                  
+                                            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin">
+    <p style="color: white; text-align: center; ">Cargando... </p>
+</ngx-spinner>

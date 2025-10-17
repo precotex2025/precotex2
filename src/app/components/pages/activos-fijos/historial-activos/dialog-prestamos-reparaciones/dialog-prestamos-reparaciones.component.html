@@ -1,0 +1,153 @@
+<mat-card>
+    <mat-card-header>
+        <div class="row" style="width: 100%;">
+            <div class="col-md-8">
+                <span><strong>DATOS DEL ACTIVO</strong>
+                </span>
+            </div>
+            <div class="col-md-4 close">
+                <span aria-label="Close" class="cerrar" (click)="closeModal()" aria-hidden="true">&times;</span>
+            </div>
+        </div>    
+    </mat-card-header>
+    <mat-card-content>
+        <div class="row">
+            <div class="col-md-3">
+                <span class="negrita">Descripción Activo: </span><br>
+                <span>{{data.descripcion}}</span>
+            </div>
+            <div class="col-md-3">
+                <span class="negrita">Código Activo: </span><br>
+                <span>{{data.codActivo}}</span>
+            </div>
+            <div class="col-md-3">
+                <span class="negrita">Area</span><br>
+                <span>{{data.area}}</span>
+            </div>
+            <div class="col-md-3">
+                <span class="negrita">Centro de Costo:</span><br>
+                <span>{{data.centroCosto}}</span>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-3">
+                <span class="negrita">Empresa:</span><br>
+                <span>{{data.empresa}}</span>
+            </div>
+            <div class="col-md-3">
+                <span class="negrita">Sede:</span><br>
+                <span>{{data.sede}}</span>
+            </div>
+            <div class="col-md-3">
+                <span class="negrita">Piso:</span><br>
+                <span>{{data.piso}}</span>
+            </div>
+            <div class="col-md-3">
+                <span class="negrita">Responsable:</span><br>
+                <span>{{data.responsable}}</span>
+            </div>
+        </div>
+        
+    </mat-card-content>
+    
+</mat-card>
+<mat-card>
+    <mat-card-header>
+        <strong>PRESTAMOS Y REPARACIONES</strong>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="row mt-4">
+            <div class="col-md-12 tabla mt-3">
+                <table mat-table class="mat-elevation-z8" #table [dataSource]="dataSource">
+                    <ng-container matColumnDef="codActivoFijo">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Cod.
+                            Activo</th>
+                        <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                            {{data_det.codActivoFijo}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="tipo">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Tipo</th>
+                        <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                            <ng-container *ngIf="data_det.tipo == 1">
+                                PRÉSTAMO
+                            </ng-container>
+                            <ng-container *ngIf="data_det.tipo == 2">
+                                REPARACIÓN
+                            </ng-container>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="responsable">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Responsable</th>
+                        <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                            {{data_det.responsable}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="proveedor">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">
+                            Proveedor</th>
+                        <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                            {{data_det.proveedor}}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="fechaInicio">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">
+                            Fecha Inicio</th>
+                        <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                            {{data_det.fechaInicio | date:'d/MM/Y' }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="fechaFin">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">
+                            Fecha Fin</th>
+                        <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                            {{data_det.fechaFin | date:'d/MM/Y'}}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="fechaRegistro">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">
+                            Fecha Registro</th>
+                        <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                            {{data_det.fechaRegistro | date:'d/MM/Y'}}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="codUsuario">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">
+                            Cod. Usuario</th>
+                        <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                            {{data_det.codUsuario}}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="documentoGuia">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">
+                            Guía </th>
+                        <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                           <button *ngIf="data_det.documentoGuia != ''" mat-icon-button color="primary" (click)="descargarArchivo(data_det.documentoGuia)"><mat-icon>download</mat-icon></button>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="documentoOrden">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">
+                            Orden</th>
+                        <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                            <button *ngIf="data_det.documentoOrden != ''" mat-icon-button color="primary" (click)="descargarArchivo(data_det.documentoOrden)"><mat-icon>download</mat-icon></button>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="documentoContratoPrestamo">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">
+                            Contrato Préstamo</th>
+                        <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                            <button *ngIf="data_det.documentoContratoPrestamo != ''" mat-icon-button color="primary" (click)="descargarArchivo(data_det.documentoContratoPrestamo)"><mat-icon>download</mat-icon></button>
+                        </td>
+                    </ng-container>
+ 
+                    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                    <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+
+                    <!-- Row shown when there is no matching data. -->
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">No se encontraron registros</td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,118 @@
+<div  #fullscreenElement class="fullscreen-container" >
+ <!-- <div class="full-screen-container"> -->
+    <button #myButton (click)="onClick()" class="floating-btn">Reproducir Audio</button>
+    <mat-table [dataSource]="currentPageData" >
+
+      <!-- <ng-container matColumnDef="Alerta">
+        <mat-header-cell *matHeaderCellDef> ALERTA </mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="{'expired-row': element.flg_Alerta === 'S'}"> 
+          <mat-icon *ngIf="element.flg_Alerta === 'S'">notifications_active</mat-icon>
+        </mat-cell>
+      </ng-container>          -->
+  
+      <ng-container matColumnDef="Almacen">
+        <mat-header-cell *matHeaderCellDef> ALMACEN </mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="{'expired-row': element.flg_Alerta === 'S', 'active-row': element.flg_Alerta === 'N'}"> {{element.almacen}} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="Partida">
+        <mat-header-cell *matHeaderCellDef> PARTIDA </mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="{'expired-row': element.flg_Alerta === 'S', 'active-row': element.flg_Alerta === 'N'}"> {{element.partida}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Cliente">
+        <mat-header-cell *matHeaderCellDef style="padding-right: 200px;"> CLIENTE </mat-header-cell>
+        <mat-cell *matCellDef="let element" style="padding-right: 200px; white-space: nowrap;" [ngClass]="{'expired-row': element.flg_Alerta === 'S', 'active-row': element.flg_Alerta === 'N'}"> {{element.cliente}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Tipo">
+        <mat-header-cell *matHeaderCellDef style="padding-right: 20px;"> TIPO </mat-header-cell>
+        <mat-cell *matCellDef="let element" style="padding-right: 20px; white-space: nowrap;" [ngClass]="{'expired-row': element.flg_Alerta === 'S', 'active-row': element.flg_Alerta === 'N'}"> {{element.tipo}} </mat-cell>
+      </ng-container>      
+
+      <ng-container matColumnDef="Cod_Tela">
+        <mat-header-cell *matHeaderCellDef> TELA </mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="{'expired-row': element.flg_Alerta === 'S', 'active-row': element.flg_Alerta === 'N'}"> {{element.cod_tela}} </mat-cell>
+      </ng-container>      
+
+      <ng-container matColumnDef="Stock">
+        <mat-header-cell *matHeaderCellDef> STOCK </mat-header-cell>
+        <mat-cell *matCellDef="let element" style="display: flex; justify-content: center; align-items: center;" [ngClass]="{'expired-row': element.flg_Alerta === 'S', 'active-row': element.flg_Alerta === 'N'}"> {{element.stock}} </mat-cell>
+      </ng-container>     
+      
+      <ng-container matColumnDef="Proceso">
+        <mat-header-cell *matHeaderCellDef style="padding-right: 20px;"> PROCESO </mat-header-cell>
+        <mat-cell *matCellDef="let element" style="padding-right: 20px;" [ngClass]="{'expired-row': element.flg_Alerta === 'S', 'active-row': element.flg_Alerta === 'N'}"> {{element.proceso}} </mat-cell>
+      </ng-container>        
+
+      <ng-container matColumnDef="Fecha_Ingreso">
+        <mat-header-cell *matHeaderCellDef style="padding-right: 20px;"> INGRESO </mat-header-cell>
+        <mat-cell *matCellDef="let element" style="padding-right: 20px;" [ngClass]="{'expired-row': element.flg_Alerta === 'S', 'active-row': element.flg_Alerta === 'N'}">
+          {{element.fec_1er_Ingreso | date:'dd/MM/yyyy' }} 
+        </mat-cell>
+      </ng-container>      
+      
+      <ng-container matColumnDef="Fecha_Permanencia_Max">
+        <mat-header-cell *matHeaderCellDef style="padding-right: 5px;"> PERMISO </mat-header-cell>
+        <mat-cell *matCellDef="let element" style="padding-right: 5px;" [ngClass]="{'expired-row': element.flg_Alerta === 'S', 'active-row': element.flg_Alerta === 'N'}">
+          {{element.fec_Maximo_Permanencia | date:'dd/MM/yyyy' }}
+        </mat-cell>
+      </ng-container>      
+      
+      <ng-container matColumnDef="Dias_Transcurridos">
+        <mat-header-cell *matHeaderCellDef style="padding-right: 5px;"> DIAS </mat-header-cell>
+        <mat-cell *matCellDef="let element" style="margin-right: 0px; display: flex; justify-content: center; align-items: center;" [ngClass]="{'expired-row': element.flg_Alerta === 'S', 'active-row': element.flg_Alerta === 'N'}" >
+          {{element.dias_Transcurridos }}
+        </mat-cell>
+      </ng-container>  
+
+      <ng-container matColumnDef="Prepa">
+        <mat-header-cell *matHeaderCellDef style="padding-right: 5px;"> PREPA </mat-header-cell>
+        <mat-cell *matCellDef="let element" style="margin-right: 0px; display: flex; justify-content: center; align-items: center;" [ngClass]="{'expired-row': element.flg_Alerta === 'S', 'active-row': element.flg_Alerta === 'N'}" >
+          {{element.preparado }}
+        </mat-cell>
+      </ng-container>       
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <!-- <mat-paginator *ngIf="isVisible" [pageSizeOptions]="[10, 20, 40]" showFirstLastButtons aria-label="Select page of periodic elements">
+    </mat-paginator> -->
+
+  <!-- </div>  -->
+ <div class="floating-div" *ngIf="isVisible">
+  <h3>Resumen Stock</h3>
+  
+  <div class="row">
+    <div class="col-6">
+      <div class="row">
+        <div class="col-7">General</div>
+        <div class="col-5" style="font-size: 20px; float: right;" >{{ g_totalStock | number }}</div>
+      </div>
+
+      <div class="row">
+        <div class="col-7">Vencidos</div>
+        <div class="col-5" style="font-size: 20px;">{{ g_totalStock_S | number }}</div>        
+      </div>     
+      
+      <div class="row">
+        <div class="col-7">No Vencidos</div>
+        <div class="col-5" style="font-size: 20px;">{{ g_totalStock_N | number }}</div>        
+      </div>      
+    </div>
+    <div class="col-6">
+      <div class="row">
+        <div class="col-7">Venc. Desa.</div>
+        <div class="col-5" style="font-size: 20px;">{{ g_totalStock_Ven_Des | number }}</div>
+      </div>
+
+      <div class="row">
+        <div class="col-7">Venc. Prod.</div>
+        <div class="col-5" style="font-size: 20px;">{{ g_totalStock_Ven_Prod | number }}</div>        
+      </div>  
+
+    </div>
+  </div>
+</div>
+

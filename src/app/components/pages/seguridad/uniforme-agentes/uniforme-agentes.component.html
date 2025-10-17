@@ -1,0 +1,119 @@
+<div class="container-fluid">
+    <!-- ventana nro 3 - salida -->
+    <div class="grid-container">
+
+        <div class="title">Factor de Calificación: Uniforme (Agente de Seguridad)</div>
+
+        <div class="find">
+            <div class="auditoriaForm">
+                <div class="row">
+                    <div class="col-md-12">
+                        <mat-card>
+                            <mat-card-header>
+                                <div class="row" style="width: 100%;">
+                                    <div class="col-md-6">
+                                        Agente Seguridad
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span class="text-danger">Fecha: {{fecha}}</span> 
+                                    </div>
+                                </div>
+                                
+                                
+                                
+                            </mat-card-header>
+                            <mat-card-content>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <ng-select [items]="dataEstablecimientos" (change)="applyFilter($event)" style="width: 100%;" bindLabel="desEstablecimiento"
+                                            bindValue="codEstablecimiento" [multiple]="false" [searchable]="true"
+                                            placeholder="Establecimiento *">
+                                        </ng-select>
+                                    </div>
+                                    <div class="col-md-3 mt-1">
+                                        <button type="button" class="fila1-info" color="primary" mat-flat-button
+                                            (click)="irReportes()">
+                                            <mat-icon aria-label="person">list_alt</mat-icon> Reportes
+                                        </button>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+
+
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <mat-card>
+                            <mat-card-header>Evaluación Uniforme
+                            </mat-card-header>
+                            <mat-card-content>
+                                <div class="row">
+                                    <div class="col-md-12 tabla">
+                                        <table mat-table class="mat-elevation-z8" #table [dataSource]="dataSource">
+                                            <ng-container matColumnDef="codTrabajador">
+                                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Apellidos y Nombres
+                                                </th>
+                                                <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                    {{data_det.nombresTrabajador}} </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="camisaBlusa">
+                                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Camisa/Blusa</th>
+                                                <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                    <mat-checkbox [checked]="data_det.camisaBlusa == '1'" color="warn" [disabled]="data_det.flgEstado == 'A'" class="example-margin" (change)="changeCheck($event, 'camisaBlusa', data_det.idFactorUniforme)"></mat-checkbox> </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="pantalon">
+                                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Pantalón</th>
+                                                <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                    <mat-checkbox color="warn" [checked]="data_det.pantalon == '1'" [disabled]="data_det.flgEstado == 'A'" class="example-margin" (change)="changeCheck($event, 'pantalon', data_det.idFactorUniforme)" ></mat-checkbox> </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="calzado">
+                                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Calzado</th>
+                                                <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                    <mat-checkbox color="warn" [checked]="data_det.calzado == '1'" [disabled]="data_det.flgEstado == 'A'" class="example-margin" (change)="changeCheck($event, 'calzado', data_det.idFactorUniforme)"></mat-checkbox> </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="chaleco">
+                                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Chaleco</th>
+                                                <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                    <mat-checkbox color="warn" [checked]="data_det.chaleco == '1'" [disabled]="data_det.flgEstado == 'A'" class="example-margin" (change)="changeCheck($event, 'chaleco', data_det.idFactorUniforme)"></mat-checkbox> </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="flgEstado">
+                                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell">status</th>
+                                                <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                    <ng-container *ngIf="data_det.flgEstado == 'A'">
+                                                        <span style="background-color: green; color: white; padding: 5px;">APROBADO</span>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="data_det.flgEstado != 'A' && data_det.flgEstado != null">
+                                                        <span style="background-color: red; color: white; padding: 5px;">DESAPROBADO</span>
+                                                    </ng-container>
+                                                </td>
+                                            </ng-container>
+                                            
+                                            <ng-container matColumnDef="observaciones">
+                                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Observaciones</th>
+                                                <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                    <input type="text" [(ngModel)]="data_det.observaciones" name="observaciones" id="observaciones" maxlength="150" (change)="changeObservacion($event, data_det.idFactorUniforme)" autocomplete="off" class="form-control" placeholder="Ingrese Observacion">    
+                                                </td>
+                                            </ng-container>
+
+                                            <tr mat-header-row *matHeaderRowDef="columnsToDisplay;sticky: true"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+                                        </table>
+                                    </div>
+                                </div>
+                      
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin">
+    <p style="color: white; text-align: center; ">Cargando... </p>
+</ngx-spinner>

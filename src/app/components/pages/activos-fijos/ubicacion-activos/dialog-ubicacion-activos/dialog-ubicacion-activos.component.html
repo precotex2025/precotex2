@@ -1,0 +1,71 @@
+<div class="container-fluid">
+    <!-- ventana nro 4 - historial -->
+    <div class="grid-container">
+        <!-- *ngIf="Titulo == undefined; else titulomodificar" -->
+        <div class="title">{{cabecera}}</div>
+        <div class="body">
+            <form class="container-cuerpo" [formGroup]="formulario">
+                <div>
+                    <ng-select [items]="dataUbicacion" style="width: 100%;" bindLabel="desArea"
+                        bindValue="desArea" [multiple]="false" [searchable]="true" placeholder="Ubicacion *"
+                            (change)="changeUbicacion($event)" formControlName="desArea">
+                    </ng-select>
+                </div>
+
+                <div class="fila2">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Sede</mat-label>
+                        <input matInput type="text" placeholder="Sede" autocomplete="off" formControlName="codSede" [readonly]="true">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill">
+                        <mat-label>Piso</mat-label>
+                        <input matInput type="text" placeholder="Piso" autocomplete="off" formControlName="codPiso" [readonly]="true">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill">
+                        <mat-label>Código Ambiente</mat-label>
+                        <input matInput type="text" (input)="generarCodigo()" placeholder="Código Ambiente" autocomplete="off" formControlName="codAmbiente"/>
+                    </mat-form-field>
+                </div>
+
+                <div class="fila2">
+                    <mat-form-field class="example-form-field" appearance="fill">
+                        <mat-label>Código General</mat-label>
+                        <input matInput type="text" placeholder="Código General" autocomplete="off" formControlName="codGeneral" [readonly]="true">
+                    </mat-form-field>
+
+                    <mat-form-field class="example-form-field" appearance="fill">
+                        <mat-label>Centro de Costo</mat-label>
+                        <mat-select formControlName="centroCosto">
+                            <mat-option *ngFor="let item of centroCosto" (click)="selectCCosto(item)" [value]="item.codCentroCosto">
+                                {{item.codCentroCosto}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>  
+
+                <div class="fila1">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Descripción</mat-label>
+                        <input matInput type="text" placeholder="Descripción" autocomplete="off" formControlName="desAmbiente"/>
+                    </mat-form-field>
+                </div>  
+            </form>
+        </div>
+
+        <div class="footer">
+            <button class="button-dialog" mat-flat-button type="button" (click)="guardarAmbiente()" [disabled]="!formulario.valid">
+                <mat-icon aria-label="person" >check
+                </mat-icon>{{boton}}
+
+            </button>
+            <button class="button-cancelar"  mat-flat-button type="button" mat-dialog-close>
+                <mat-icon aria-label="person">highlight_off
+                </mat-icon>
+                CANCELAR</button>
+        </div>
+    </div>
+  
+  </div>
+  

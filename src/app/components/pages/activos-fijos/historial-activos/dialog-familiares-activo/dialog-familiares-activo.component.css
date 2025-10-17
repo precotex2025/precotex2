@@ -1,0 +1,71 @@
+mat-card {
+    margin-top: 10px;
+    padding: 0px;
+}
+
+mat-card-header {
+    padding: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, .4);
+}
+
+mat-card-content {
+    margin-top: 10px;
+    padding: 10px 15px;
+}
+
+.close{
+    text-align: right;
+}
+
+.cerrar{
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.negrita{
+    font-weight: 500;
+}
+
+.mat-column-empresa,
+.mat-column-idDescripcion,
+.mat-column-descripcion,
+.mat-column-categoria,
+.mat-column-usoDesuso,
+.mat-column-observacion,
+.mat-column-fecRegistro,
+.mat-column-acciones,
+.mat-column-empresa,
+.mat-column-piso,
+.mat-column-area,
+.mat-column-centroCosto,
+.mat-column-responsable,
+.mat-column-codUsuario,
+.mat-column-claseActivo,
+.mat-column-codActivoPadre,
+.mat-column-precioTotal,
+.mat-column-tipoActivo,
+.mat-column-codActivo,
+.mat-column-descripcion,
+.mat-column-descripcionMejora,
+.mat-column-marca,
+.mat-column-modelo,
+.mat-column-serie,
+.mat-column-color,
+.mat-column-medida,
+.mat-column-serieMotor,
+.mat-column-serieChasis,
+.mat-column-placa,
+.mat-column-tipoCombustible,
+.mat-column-tipoCaja,
+.mat-column-cantidadAsiento,
+.mat-column-cantidadEje,
+.mat-column-anoFabricacion,
+.mat-column-usoDesuso,
+.mat-column-observacion,
+.mat-column-fecRegistro,
+.mat-column-detalle {
+    text-align: center;
+    font-size: 10px;
+    font-family: arial;
+    padding: 2px;
+}

@@ -1,0 +1,187 @@
+<div class="container-fluid">
+    <!-- ventana nro 3 - salida -->
+    <div class="grid-container">
+
+        <div class="title">Adjuntar Documentos</div>
+
+        <div class="find">
+            <form class="auditoriaForm" [formGroup]="formulario" #formDirective="ngForm" (ngSubmit)="guardarRegistro()">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <mat-card>
+                                <mat-card-header>
+                                    <div class="row content" style="width: 100%;">
+                                        <div class="col-md-9 col-xs-12">
+                                            <span style="font-weight: bold;">Datos del Documento
+                                            </span>
+                                        </div>
+                                        <div class="col-md-3 col-xs-12 close">
+                                            <button mat-raised-button class="button-cancel" (click)="regresar()"
+                                                color="primary">
+                                                <mat-icon>keyboard_arrow_left</mat-icon> REGRESAR
+                                            </button>
+                                        </div>
+                                    </div>
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label for="" class="mb-1">Tipo de Documento</label>
+                                            <mat-form-field class="example-form-field" appearance="fill" >
+                                                <mat-label></mat-label>
+                                                <mat-select formControlName="tipoDocumento">
+                                                    <mat-option value="" selected hidden>Seleccione</mat-option>
+                                                    <mat-option value="Orden de Compra">Orden de Compra</mat-option>
+                                                    <mat-option value="Guía de Remisión">Guía de Remisión</mat-option>
+                                                    <mat-option value="Factura de Compra">Factura de Compra</mat-option>
+                                                    <mat-option value="Contrato de Préstamo">Contrato de Préstamo</mat-option>
+                                                    <mat-option value="Boleta de Venta">Boleta de Venta</mat-option>
+                                                    <mat-option value="Acta de Funcionamiento">Acta de Funcionamiento</mat-option>
+                                                    <mat-option value="Asignacion Responsable">Asignación Responsable</mat-option>
+                                                </mat-select>
+
+                                                <mat-error *ngIf="this.f['tipoDocumento'].errors && this.f['tipoDocumento'].errors!['required'] && submitForm">
+                                                    Debes seleccionar el tipo de <strong>documento.</strong>
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <mat-form-field class="example-full-width" >
+                                                <mat-label>Observación</mat-label>
+                                                <textarea formControlName="observacion" maxlength="150" matInput placeholder="Ingrese" cols="5" rows="3"></textarea>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="file" (change)="onChangeFile($event)" autocomplete="off"
+                                                class="form-control d-none" #inputFile>
+                                            <button (click)="inputFile.click()" type="button" class="button-info"
+                                                mat-flat-button>Adjuntar Documento</button>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span *ngIf="file != undefined && file != null" class="text-success">Archivo Seleccionado: {{file.name}}</span><br>
+                                            <button *ngIf="file != undefined && file != null" (click)="eliminarArchivo()" mat-flat-button color="warn"> Archivo <mat-icon>delete</mat-icon></button>
+                                        </div>
+                                    </div>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <mat-card>
+                                <mat-card-header>
+                                    Seleccionar Activos
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <mat-form-field class="example-full-width2" appearance="fill">
+                                                <mat-label>Código Activo</mat-label>
+                                                <input matInput maxlength="9" placeholder="Ingresa Cód. Activo" (input)="changeCodActivo()" formControlName="codActivo">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <mat-form-field class="example-full-width2" appearance="fill">
+                                                <mat-label>Guía de Remisión</mat-label>
+                                                <input matInput placeholder="Ingresa N° de guía" (input)="changeGuia()" formControlName="nroGuia">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3 col-xs-12 close">
+                                            <button mat-raised-button class="button-info-add" type="button" (click)="agregarDataTabla()"
+                                                color="primary">
+                                                <mat-icon>add</mat-icon> Agregar
+                                            </button>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <button mat-raised-button class="button-success" type="submit"
+                                                color="primary">
+                                                <mat-icon>save</mat-icon> Guardar Documento
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12 tabla mt-3">
+                                            <table mat-table class="mat-elevation-z8" #table [dataSource]="dataSource">
+                                                <ng-container matColumnDef="codActivo">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Cod.
+                                                        Activo</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                        {{data_det.codActivo}} </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="tipoActivo">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Tipo Activo</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                        <ng-container *ngIf="data_det.tipoActivo == 1">
+                                                            ACTIVO FIJO PADRE
+                                                        </ng-container>
+                                                        <ng-container *ngIf="data_det.tipoActivo == 2">
+                                                            ACTIVO FIJO HIJO
+                                                        </ng-container>
+                                                        <ng-container *ngIf="data_det.tipoActivo == 3">
+                                                            ACTIVO FIJO NIETO
+                                                        </ng-container>
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="claseActivo">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Clase
+                                                        Activo</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                        {{data_det.claseActivo}} </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="nomResponsable">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">
+                                                        Responsable</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                        {{data_det.nomResponsable}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="empresa">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">
+                                                        Empresa</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                        {{data_det.empresa}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="acciones">
+                                                    <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+
+                                                        <a mat-icon-button (click)="EliminarRegistro(data_det)">
+                                                            <mat-icon color="warn">delete</mat-icon>
+                                                        </a>
+                                                    </td>
+                                                </ng-container>
+
+                                                <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                                                <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+
+                                                <!-- Row shown when there is no matching data. -->
+                                                <tr class="mat-row" *matNoDataRow>
+                                                    <td class="mat-cell" colspan="4">No se encontraron registros</td>
+                                                </tr>
+                                            </table>
+
+                                        </div>
+                                    </div>
+
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+
+        </div>
+
+
+
+
+    </div>
+</div>
+
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin">
+    <p style="color: white; text-align: center; ">Cargando... </p>
+</ngx-spinner>

@@ -1,0 +1,253 @@
+<div class="container-fluid">
+    <!-- ventana nro 3 - salida -->
+    <div class="grid-container">
+
+        <div class="title">Reporte de Mejoras</div>
+
+        <div class="find">
+            <div class="auditoriaForm">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <mat-card>
+                                <mat-card-header>
+                                    <div class="row content" style="width: 100%;">
+                                        <div class="col-md-9 col-xs-12">
+                                            <span style="font-weight: bold;">Reporte
+                                            </span>
+                                        </div>
+                                        <div class="col-md-3 col-xs-12 close">
+                                            <button mat-raised-button class="button-cancel" (click)="regresar()"
+                                                color="primary">
+                                                <mat-icon>keyboard_arrow_left</mat-icon> REGRESAR
+                                            </button>
+                                        </div>
+                                    </div>
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <mat-form-field class="fila1-fecha" appearance="fill">
+                                                <mat-label>Rango de Fecha</mat-label>
+                                                <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+                                                    <input matStartDate formControlName="start" placeholder="Fecha Inicio">
+                                                    <input matEndDate formControlName="end" placeholder="Fecha Final">
+                                                </mat-date-range-input>
+                                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                <mat-date-range-picker #picker></mat-date-range-picker>
+                                                <mat-icon (click)="clearDate($event)" style=" position: absolute;
+                                                        float: right;
+                                                        top: -6px;
+                                                        margin-left: 190px;
+                                                        cursor: pointer;
+                                                        color: rgba(0, 0, 0, 0.54);">clear</mat-icon>
+                                                <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Fecha
+                                                    Invalida</mat-error>
+                                                <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Fecha
+                                                    Invalida</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3 col-xs-12 close">
+                                            <button mat-raised-button class="button-info-add" (click)="buscarReporteControlActivos()"
+                                                color="primary">
+                                                <mat-icon>search</mat-icon> Buscar
+                                            </button>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <button mat-raised-button class="button-success" (click)="generateExcel()"
+                                                color="primary">
+                                                <mat-icon>insert_drive_file</mat-icon> Exportar
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 tabla">
+                                            <table mat-table class="mat-elevation-z8" #table [dataSource]="dataSource">
+
+                                                <ng-container matColumnDef="empresa">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Empresa</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det"> {{data_det.empresa}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="piso">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Piso</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det"> {{data_det.piso}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="area">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Area</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det"> {{data_det.area}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="centroCosto">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Centro Costo</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                        {{data_det.centroCosto}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="responsable">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Responsable
+                                                    <th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                        {{data_det.responsable}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="codUsuario">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Cod. Usuario</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det"> {{data_det.codUsuario}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="claseActivo">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Clase Activo</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                        {{data_det.claseActivo}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="codActivoPadre">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Cod. Activo Padre</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                        {{data_det.codActivoPadre}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="precioTotal">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Precio Total</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                        {{data_det.precioTotal}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="codActivo">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Cod. Activo</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det"> {{data_det.codActivo}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="descripcion">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Descripción</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                        {{data_det.descripcion}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="descripcionMejora">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Descripción Mejora</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                        {{data_det.descripcionMejora}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="marca">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Marca</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det"> {{data_det.marca}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="modelo">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Modelo</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det"> {{data_det.modelo}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="serie">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Serie</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det"> {{data_det.serie}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="color">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Color</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det"> {{data_det.color}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="medida">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Medida</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det"> {{data_det.medida}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="serieMotor">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Serie Motor</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det"> {{data_det.serieMotor}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="serieChasis">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Serie Chasis</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                        {{data_det.serieChasis}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="placa">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Placa</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det"> {{data_det.placa}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="tipoCombustible">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Tipo Combustible</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                        {{data_det.tipoCombustible}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="tipoCaja">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Tipo Caja</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det"> {{data_det.tipoCaja}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="cantidadAsiento">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Cantidad Asiento</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                        {{data_det.cantidadAsiento}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="cantidadEje">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Cantidad Eje</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                        {{data_det.cantidadEje}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="anoFabricacion">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Año Fabricación</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                        {{data_det.anoFabricacion}}
+                                                    </td>
+                                                </ng-container>
+                        
+                                                <ng-container matColumnDef="usoDesuso">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Uso/Desuso</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det"> {{data_det.usoDesuso}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="observacion">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Observación</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                        {{data_det.observacion}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="fecRegistro">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">F. Registro</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                        {{data_det.fecRegistro}}
+                                                    </td>
+                                                </ng-container>
+               
+                        
+                                                <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                                                <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+                                             
+                                            </table>
+                                            <mat-paginator [pageSizeOptions]="[10, 20, 40]" showFirstLastButtons
+                                                aria-label="Select page of periodic elements">
+                                            </mat-paginator>
+                                        </div>
+                                    </div>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </div>
+       
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+
+    </div>
+</div>
+
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin">
+    <p style="color: white; text-align: center; ">Cargando... </p>
+</ngx-spinner>

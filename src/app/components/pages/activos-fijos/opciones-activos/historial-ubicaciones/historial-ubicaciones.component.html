@@ -1,0 +1,177 @@
+<div class="container-fluid">
+    <!-- ventana nro 3 - salida -->
+    <div class="grid-container">
+
+        <div class="title">Historial de Ubicaciones </div>
+
+        <div class="find">
+            <div class="auditoriaForm">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <mat-card>
+                                <mat-card-header>
+                                    <div class="row content" style="width: 100%;">
+                                        <div class="col-md-9 col-xs-12">
+                                            <span style="font-weight: bold;">Datos del Activo
+                                            </span>
+                                        </div>
+                                        <div class="col-md-3 col-xs-12 close">
+                                            <button mat-raised-button class="button-cancel" (click)="regresar()"
+                                                color="primary">
+                                                <mat-icon>keyboard_arrow_left</mat-icon> REGRESAR
+                                            </button>
+                                        </div>
+                                    </div>
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <mat-form-field class="example-full-width2" appearance="fill">
+                                                <mat-label>Código Activo</mat-label>
+                                                <input matInput placeholder="Ingresa Cód. Activo" maxlength="9" [(ngModel)]="codActivo">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3 col-xs-12 close">
+                                            <button mat-raised-button class="button-info-add" (click)="obtenerHistorialUbicacion()"
+                                                color="primary">
+                                                <mat-icon>search</mat-icon> Buscar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <mat-card>
+                                <mat-card-header>
+                                    <strong>Historial de Ubicaciones</strong>
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <div class="row">
+                                        <div class="col-md-12 tabla mt-3">
+                                            <table mat-table class="mat-elevation-z8" #table [dataSource]="dataSource">
+                                                <ng-container matColumnDef="ubicacion">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Ubicación</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                        {{data_det.ubicacion}} </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="responsable">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Responsable</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                        {{data_det.responsable}} </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="fechaRegistro">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">
+                                                        Fecha Registro</th>
+                                                    <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                        {{data_det.fechaRegistro | date: 'dd/MM/Y hh:mm:ss a'}}
+                                                    </td>
+                                                </ng-container>
+                                                <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                                                <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+
+                                                <!-- Row shown when there is no matching data. -->
+                                                <tr class="mat-row" *matNoDataRow>
+                                                    <td class="mat-cell" colspan="4">No se encontraron registros</td>
+                                                </tr>
+                                            </table>
+
+                                        </div>
+                                    </div>
+
+
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form action="" [formGroup]="formulario" #formDirective="ngForm" (ngSubmit)="guardarRegistro()">
+                                <mat-card>
+                                    <mat-card-header><strong>Nueva Ubicación</strong></mat-card-header>
+                                    <mat-card-content>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <mat-form-field class="example-full-width2" appearance="fill">
+                                                    <mat-label>Responsable</mat-label>
+                                                    <input matInput placeholder="Ingrese el Responsable" formControlName="responsable">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <mat-form-field class="example-full-width2" appearance="fill">
+                                                    <mat-label>Ubicación</mat-label>
+                                                    <input matInput placeholder="Ingrese la nueva ubicación" formControlName="ubicacion">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <mat-form-field class="example-full-width2" appearance="fill">
+                                                    <mat-label>Area</mat-label>
+                                                    <input matInput placeholder="Ingrese la nueva area" formControlName="area">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <mat-form-field class="example-full-width2" appearance="fill">
+                                                    <mat-label>Centro de Costo</mat-label>
+                                                    <input matInput placeholder="Ingrese la nueva area" formControlName="codCenCost">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <mat-form-field class="example-full-width2" appearance="fill">
+                                                    <mat-label>Nombre Usuario</mat-label>
+                                                    <input matInput placeholder="Ingrese el nombre usuario" formControlName="nomUsuario">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <mat-form-field class="example-form-field" appearance="fill">
+                                                    <mat-label>Seleccionar Empresa</mat-label>
+                                                    <mat-select formControlName="codEmpresa" (selectionChange)="selectEmpresa($event.value)">
+                                                        <mat-option *ngFor="let item of dataEmpresas"
+                                                [value]="item.codEmpresa">{{item.desEmpresa}}</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <mat-form-field class="example-form-field" appearance="fill">
+                                                    <mat-label>Seleccionar Sede</mat-label>
+                                                    <mat-select formControlName="sede">
+                                                        <mat-option *ngFor="let item of dataSedes"
+                                                            [value]="item.codEstablecimiento">{{item.desEstablecimiento}}</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <button mat-raised-button class="button-success" type="submit"
+                                                    color="primary">
+                                                    <mat-icon>save</mat-icon> Guardar Ubicación
+                                                </button>
+                                            </div>
+                                            <div class="col-md-3">
+    
+                                            </div>
+                                        </div>
+                                    </mat-card-content>
+                                </mat-card>
+                            </form>
+                            
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+
+    </div>
+</div>
+
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin">
+    <p style="color: white; text-align: center; ">Cargando... </p>
+</ngx-spinner>

@@ -1,0 +1,416 @@
+<div class="container-fluid">
+    <!-- ventana nro 3 - salida -->
+    <div class="grid-container">
+
+        <div class="title">Formatos Diversos</div>
+
+        <div class="find">
+            <div class="auditoriaForm">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <mat-card>
+                                <mat-card-header>
+                                    <div class="row content" style="width: 100%;">
+                                        <div class="col-md-9 col-xs-12">
+                                            <span style="font-weight: bold;">FORMATO
+                                            </span>
+                                        </div>
+                                        <div class="col-md-3 col-xs-12 close">
+                                            <button mat-raised-button class="button-cancel" (click)="regresar()"
+                                                color="primary">
+                                                <mat-icon>keyboard_arrow_left</mat-icon> REGRESAR
+                                            </button>
+                                        </div>
+                                    </div>
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <div class="row">
+                                        <div class="col-md-3 col-xs-12 close">
+                                            <mat-form-field class="example-form-field" appearance="fill">
+                                                <mat-label>Seleccionar Formato</mat-label>
+                                                <mat-select (selectionChange)="changeFormato($event)">
+                                                    <!-- <mat-option value="1">Formato de Asignación de Bienes</mat-option> -->
+                                                    <mat-option value="2" disabled>Formato de Reasignación de bienes</mat-option>
+                                                    <mat-option value="3" disabled>Formato de entrega de cargo</mat-option>
+                                                    <mat-option value="4">Formato de Baja de Activos</mat-option>
+                                                    <mat-option value="5">Contrato de Préstamo</mat-option>
+                                                    <mat-option value="6" disabled>Formato de Traslado de Activos Fijos</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        <!-- <div class="col-md-3">
+                                            <button mat-raised-button class="button-success" (click)="exportarFormatos()"
+                                                color="primary">
+                                                <mat-icon>picture_as_pdf</mat-icon> Exportar Formato
+                                            </button>
+                                        </div> -->
+                                    </div>
+                                </mat-card-content>
+                            </mat-card>
+
+                            <mat-card *ngIf="formato != '' && formato == '4'">
+                                <mat-card-header> <strong>Baja de Activos</strong></mat-card-header>
+                                <mat-card-content>
+                                    <form [formGroup]="formulario" #formDirective="ngForm" (ngSubmit)="exportarFormatos()">
+                                        <div class="row">
+                                            <div class="col-md-3 col-xs-12 close">
+                                                <mat-form-field class="example-form-field" appearance="fill" >
+                                                    <mat-label>Seleccionar Sede</mat-label>
+                                                    <mat-select formControlName="sede">
+                                                        <mat-option *ngFor="let item of dataSedes"  [value]="item.desEstablecimiento">{{item.desEstablecimiento}}</mat-option>
+                                          
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <mat-form-field class="example-full-width2" appearance="fill">
+                                                    <mat-label>Solicitante</mat-label>
+                                                    <input matInput type="text" formControlName="solicitante">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <mat-form-field class="example-full-width2" appearance="fill">
+                                                    <mat-label>Responsable</mat-label>
+                                                    <input matInput type="text" formControlName="responsable">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <mat-form-field class="example-full-width2" appearance="fill">
+                                                    <mat-label>C. Costo</mat-label>
+                                                    <input matInput type="text" formControlName="codCenCost">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-3 col-xs-12 close">
+                                                <mat-form-field class="example-form-field" appearance="fill">
+                                                    <mat-label>Evaluación de Mantenimiento</mat-label>
+                                                    <mat-select formControlName="mantenimiento">
+                                                        <mat-option value="SI">SI</mat-option>
+                                                        <mat-option value="NO">NO</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <mat-form-field class="example-full-width2" appearance="fill">
+                                                    <mat-label>Fecha</mat-label>
+                                                    <input matInput type="date" formControlName="fecha">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <mat-form-field class="example-full-width2" appearance="fill">
+                                                    <mat-label>Motivo</mat-label>
+                                                    <input matInput type="text" formControlName="motivo">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <mat-form-field class="example-full-width2" appearance="fill">
+                                                    <mat-label>Observaciones</mat-label>
+                                                    <input matInput type="text" formControlName="observaciones">
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+    
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <mat-card>
+                                                    <mat-card-header>
+                                                        Seleccionar Activos
+                                                    </mat-card-header>
+                                                    <mat-card-content>
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <mat-form-field class="example-full-width2" appearance="fill">
+                                                                    <mat-label>Código Activo</mat-label>
+                                                                    <input matInput maxlength="9" placeholder="Ingresa Cód. Activo" (input)="changeCodActivo()" formControlName="codActivo">
+                                                                </mat-form-field>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <mat-form-field class="example-full-width2" appearance="fill">
+                                                                    <mat-label>Guía de Remisión</mat-label>
+                                                                    <input matInput placeholder="Ingresa N° de guía" (input)="changeGuia()" formControlName="nroGuia">
+                                                                </mat-form-field>
+                                                            </div>
+                                                            <div class="col-md-3 col-xs-12 close">
+                                                                <button mat-raised-button class="button-info-add" type="button" (click)="agregarDataTabla()"
+                                                                    color="primary">
+                                                                    <mat-icon>add</mat-icon> Agregar
+                                                                </button>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <button mat-raised-button class="button-success" type="submit"
+                                                                    color="primary">
+                                                                    <mat-icon>save</mat-icon> Exportar Formato
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                    
+                                                        <div class="row">
+                                                            <div class="col-md-12 tabla mt-3">
+                                                                <table mat-table class="mat-elevation-z8" #table [dataSource]="dataSource">
+                                                                    <ng-container matColumnDef="codActivo">
+                                                                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Cod.
+                                                                            Activo</th>
+                                                                        <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                                            {{data_det.codActivo}} </td>
+                                                                    </ng-container>
+                                                                    <ng-container matColumnDef="tipoActivo">
+                                                                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Tipo Activo</th>
+                                                                        <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                                            <ng-container *ngIf="data_det.tipoActivo == 1">
+                                                                                ACTIVO FIJO PADRE
+                                                                            </ng-container>
+                                                                            <ng-container *ngIf="data_det.tipoActivo == 2">
+                                                                                ACTIVO FIJO HIJO
+                                                                            </ng-container>
+                                                                            <ng-container *ngIf="data_det.tipoActivo == 3">
+                                                                                ACTIVO FIJO NIETO
+                                                                            </ng-container>
+                                                                        </td>
+                                                                    </ng-container>
+                                                                    <ng-container matColumnDef="claseActivo">
+                                                                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Clase
+                                                                            Activo</th>
+                                                                        <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                                            {{data_det.claseActivo}} </td>
+                                                                    </ng-container>
+                                                                    <ng-container matColumnDef="nomResponsable">
+                                                                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">
+                                                                            Responsable</th>
+                                                                        <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                                            {{data_det.nomResponsable}}
+                                                                        </td>
+                                                                    </ng-container>
+                                                                    <ng-container matColumnDef="empresa">
+                                                                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">
+                                                                            Empresa</th>
+                                                                        <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                                                            {{data_det.empresa}}
+                                                                        </td>
+                                                                    </ng-container>
+                                                                    <ng-container matColumnDef="acciones">
+                                                                        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                                                                        <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                    
+                                                                            <a mat-icon-button (click)="EliminarRegistro(data_det)">
+                                                                                <mat-icon color="warn">delete</mat-icon>
+                                                                            </a>
+                                                                        </td>
+                                                                    </ng-container>
+                    
+                                                                    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                                                                    <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+                    
+                                                                    <!-- Row shown when there is no matching data. -->
+                                                                    <tr class="mat-row" *matNoDataRow>
+                                                                        <td class="mat-cell" colspan="4">No se encontraron registros</td>
+                                                                    </tr>
+                                                                </table>
+                    
+                                                            </div>
+                                                        </div>
+                    
+                                                    </mat-card-content>
+                                                </mat-card>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    
+                                </mat-card-content>
+                            </mat-card>
+
+                            <mat-card *ngIf="formato != '' && formato == '5'">
+                                <mat-card-header> <strong>Préstamos Activos</strong></mat-card-header>
+                                <mat-card-content>
+                                    <form [formGroup]="formulario2" #formDirective="ngForm" (ngSubmit)="exportarFormatoPrestamo()">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <mat-card>
+                                                    <mat-card-header>DATOS DE LA EMPRESA</mat-card-header>
+                                                    <mat-card-content>
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <mat-form-field class="example-full-width2" appearance="fill">
+                                                                    <mat-label>Empresa</mat-label>
+                                                                    <input matInput type="text" formControlName="empresa">
+                                                                </mat-form-field>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <mat-form-field class="example-full-width2" appearance="fill">
+                                                                    <mat-label>RUC</mat-label>
+                                                                    <input matInput type="text" formControlName="ruc" maxlength="11">
+                                                                </mat-form-field>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <mat-form-field class="example-full-width2" appearance="fill">
+                                                                    <mat-label>Dirección</mat-label>
+                                                                    <input matInput type="text" formControlName="direccion">
+                                                                </mat-form-field>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <mat-form-field class="example-full-width2" appearance="fill">
+                                                                    <mat-label>Distrito</mat-label>
+                                                                    <input matInput type="text" formControlName="distrito">
+                                                                </mat-form-field>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <mat-form-field class="example-full-width2" appearance="fill">
+                                                                    <mat-label>Provincia</mat-label>
+                                                                    <input matInput type="text" formControlName="provincia">
+                                                                </mat-form-field>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <mat-form-field class="example-full-width2" appearance="fill">
+                                                                    <mat-label>Cargo Representante</mat-label>
+                                                                    <input matInput type="text" formControlName="cargoRepresentante">
+                                                                </mat-form-field>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <mat-form-field class="example-full-width2" appearance="fill">
+                                                                    <mat-label>Representante</mat-label>
+                                                                    <input matInput type="text" formControlName="representante">
+                                                                </mat-form-field>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <mat-form-field class="example-full-width2" appearance="fill">
+                                                                    <mat-label>DNI Representante</mat-label>
+                                                                    <input matInput type="text" formControlName="dniRepresentante" maxlength="8">
+                                                                </mat-form-field>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <mat-form-field class="example-full-width2" appearance="fill">
+                                                                    <mat-label>Partida Electrónica</mat-label>
+                                                                    <input matInput type="text" formControlName="partidaElectronica">
+                                                                </mat-form-field>
+                                                            </div>
+                                                        </div>
+                                                    </mat-card-content>
+                                                </mat-card>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <mat-card>
+                                                        <mat-card-header>
+                                                            EMPRESA RECEPTOR
+                                                        </mat-card-header>
+                                                        <mat-card-content>
+                                                            <div class="row">
+                                                                <div class="col-md-3">
+                                                                    <mat-form-field class="example-full-width2" appearance="fill">
+                                                                        <mat-label>Empresa Receptora</mat-label>
+                                                                        <input matInput type="text" formControlName="empresaReceptora">
+                                                                    </mat-form-field>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <mat-form-field class="example-full-width2" appearance="fill">
+                                                                        <mat-label>Representante Receptor</mat-label>
+                                                                        <input matInput type="text" formControlName="representateReceptor">
+                                                                    </mat-form-field>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <mat-form-field class="example-full-width2" appearance="fill">
+                                                                        <mat-label>RUC Receptor</mat-label>
+                                                                        <input matInput type="text" formControlName="rucReceptor" maxlength="11">
+                                                                    </mat-form-field>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <mat-form-field class="example-full-width2" appearance="fill">
+                                                                        <mat-label>Dirección Receptor</mat-label>
+                                                                        <input matInput type="text" formControlName="direccionReceptor">
+                                                                    </mat-form-field>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <mat-form-field class="example-full-width2" appearance="fill">
+                                                                        <mat-label>Distrito Receptor</mat-label>
+                                                                        <input matInput type="text" formControlName="distritoReceptor">
+                                                                    </mat-form-field>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <mat-form-field class="example-full-width2" appearance="fill">
+                                                                        <mat-label>Rubro</mat-label>
+                                                                        <input matInput type="text" formControlName="rubro">
+                                                                    </mat-form-field>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <mat-form-field class="example-full-width2" appearance="fill">
+                                                                        <mat-label>Inicio de Actividades</mat-label>
+                                                                        <input matInput type="date" formControlName="inicioActividades">
+                                                                    </mat-form-field>
+                                                                </div>
+    
+                                                                <div class="col-md-3">
+                                                                    <mat-form-field class="example-full-width2" appearance="fill">
+                                                                        <mat-label>Fecha Préstamo</mat-label>
+                                                                        <input matInput type="date" formControlName="fechaPrestamo">
+                                                                    </mat-form-field>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <mat-form-field class="example-full-width2" appearance="fill">
+                                                                        <mat-label>Fecha Fin Préstamo</mat-label>
+                                                                        <input matInput type="date" formControlName="fechaFinPrestamo">
+                                                                    </mat-form-field>
+                                                                </div>
+                                                                
+                                                            </div>
+                                                        </mat-card-content>
+                                                    </mat-card>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <mat-card>
+                                                        <mat-card-header>
+                                                            Datos del Activo
+                                                        </mat-card-header>
+                                                        <mat-card-content>
+                                                            <div class="row">
+                                                                <div class="col-md-3">
+                                                                    <mat-form-field class="example-full-width2" appearance="fill">
+                                                                        <mat-label>Uso Exclusivo</mat-label>
+                                                                        <input matInput type="text" autocomplete="off" formControlName="usoExclusivo" placeholder="Ejm: Confeccionar las prendas">
+                                                                    </mat-form-field>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <mat-form-field class="example-full-width2" appearance="fill">
+                                                                        <mat-label>Tipo Activo</mat-label>
+                                                                        <input matInput type="text" autocomplete="off" formControlName="tipoActivo" placeholder="Ejm: Maquina de Coser">
+                                                                    </mat-form-field>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <mat-form-field class="example-full-width2" appearance="fill">
+                                                                        <mat-label>Código del Activo</mat-label>
+                                                                        <input matInput type="text" formControlName="codigoActivo" (input)="obtenerActivo()" maxlength="9">
+                                                                    </mat-form-field>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <button mat-raised-button class="button-success" type="submit"
+                                                                        color="primary">
+                                                                        <mat-icon>save</mat-icon> Exportar Formato
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </mat-card-content>
+                                                    </mat-card>
+                                                </div>
+                                            </div> 
+                                        </div>
+                                    </form>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </div>
+       
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+
+    </div>
+</div>
+
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin">
+    <p style="color: white; text-align: center; ">Cargando... </p>
+</ngx-spinner>

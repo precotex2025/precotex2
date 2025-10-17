@@ -1,0 +1,106 @@
+  mat-table {
+    width: 100%;        /* Ocupa todo el ancho disponible */
+    height: 100%;       /* Ocupa toda la altura disponible */
+    /*overflow: auto;*/     /* Si el contenido es demasiado grande, agrega barras de desplazamiento */
+    display: block;     /* Asegura que la tabla se comporte como un bloque */
+    table-layout: fixed;/* Controla el ancho de las celdas de la tabla */
+  }
+
+
+
+  .expired-row {
+    background-color: #E10D12;
+    color: white;
+  } 
+
+  .active-row {
+    background-color: hsl(130, 85%, 35%);
+    color: white;
+  }
+
+  /* Paginación */
+  mat-paginator {
+    height: 5%;
+    /* font-size: 15px;
+    margin-top: 20px;
+    align-self: flex-end; */
+  } 
+
+  ::ng-deep .mat-header-cell {
+    /*background-color: blue;*/
+    /*color: white; */ /* Cambia el color del texto a blanco para que sea legible */
+    background-color: #21F8FA;
+    font-size: 18px;
+    font-weight: bold;
+    color: #000000;
+    height: 15px;
+    width: 150px;
+  }
+
+  ::ng-deep .mat-cell {
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px; 
+    line-height: 1.5;
+    margin-right: -5px;
+  }
+
+  ::ng-deep .mat-header-row {
+    height: 20px !important; /* Ajusta la altura de la fila de cabecera */
+  }
+
+  .red-icon {
+    color: red;  /* Cambia el color del ícono a rojo */
+  }
+
+
+
+  .fullscreen-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+    transition: all 0.3s ease;
+  }
+
+  .floating-div {
+    width: 38%;
+    position: absolute;  /* Posicionamiento absoluto con respecto al contenedor principal */
+    /*top: 10px;*/          /* Saca el div 30px fuera del contenedor principal */
+    left: 20%;           /* Centrado horizontalmente */
+    bottom: 10px;
+    transform: translateX(-50%); /* Centrado exacto del div */
+    /*background-color: rgba(0, 0, 0, 0.8);*/ /* Fondo oscuro con transparencia */
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para que se vea flotante */
+    z-index: 1000; /* Asegura que el div sobresalga por encima de otros elementos */
+  }
+
+  .floating-btn {
+    position: fixed;
+    bottom: 20px;   /* Coloca el botón a 20px del borde inferior */
+    right: 20px;    /* Coloca el botón a 20px del borde derecho */
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo con transparencia */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;  /* Haciendo el botón completamente invisible */
+    transition: opacity 0.3s ease; /* Transición suave para cambiar la opacidad */
+  }
+
+  mat-header-cell, mat-cell {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }

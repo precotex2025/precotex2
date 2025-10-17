@@ -1,0 +1,95 @@
+<div class="row caja">
+    <div class="col-md-12">
+        <mat-card>
+            <mat-card-header>
+                <div class="row" style="width: 100%;">
+                    <div class="col-md-8">
+                        <span><strong>EDITAR PUNTAJE</strong>
+                        </span>
+                    </div>
+                    <div class="col-md-4 close">
+                        <span aria-label="Close" class="cerrar" (click)="closeModal()" aria-hidden="true">&times;</span>
+                    </div>
+                </div>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="row" *ngIf="data.tipoFactor == 1">
+                    <div class="col-md-12 tabla">
+                        <table mat-table class="mat-elevation-z8" #table [dataSource]="dataSource">
+                            <ng-container matColumnDef="criterio">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Criterio
+                                </th>
+                                <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                    {{data_det.criterio}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="puntaje">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Puntaje</th>
+                                <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                    <input type="number" name="puntaje" [value]="data_det.puntaje"
+                                        (change)="actualizarPuntaje($event, data_det.idGestionBonoDet, data_det.puntajeMaximo)"
+                                        placeholder="Ingrese el puntaje" [max]="data_det.puntajeMaximo" min="0"
+                                        id="puntaje" class="form-control text-center">
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="puntajeMaximo">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Puntaje Maximo</th>
+                                <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                    {{data_det.puntajeMaximo}} </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                            <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="data.tipoFactor == 2">
+                    <div class="col-md-12 tabla">
+                        <table mat-table class="mat-elevation-z8" #table [dataSource]="dataSource2">
+                            <ng-container matColumnDef="criterio">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Criterio
+                                </th>
+                                <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                    {{data_det.criterio}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="puntaje">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Puntaje</th>
+                                <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                    <ng-container *ngIf="data.tipoUsuario == 1">
+                                        <select name="puntaje" id="puntaje" class="form-control" (change)="actualizarPuntaje3($event, data_det.idSolBonoDet, data_det.puntajeMaximo)" [(ngModel)]="data_det.puntaje">
+                                            <option value="null" hidden>Seleccione Puntaje</option>
+                                            <option value="0">0</option>
+                                            <option value="{{data_det.puntajeMaximo}}">{{data_det.puntajeMaximo}}</option>
+                                        </select>
+                                    </ng-container>
+                                    <ng-container *ngIf="data.tipoUsuario == 2">
+                                        <mat-radio-group aria-label="Select an option"
+                                        (change)="actualizarPuntaje2($event, data_det.idSolBonoDet)">
+                                        <mat-radio-button value="5"
+                                            [checked]="data_det.puntaje == 5">Aprobar</mat-radio-button>
+                                        <mat-radio-button value="0"
+                                            [checked]="data_det.puntaje == 0">Desaprobar</mat-radio-button>
+                                        </mat-radio-group>
+                                    </ng-container>
+                                    
+
+                                    
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="puntajeMaximo">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Puntaje Maximo</th>
+                                <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                    {{data_det.puntajeMaximo}} </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                            <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+                        </table>
+                    </div>
+                </div>
+            </mat-card-content>
+
+        </mat-card>
+
+
+
+    </div>
+</div>

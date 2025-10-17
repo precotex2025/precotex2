@@ -1,0 +1,62 @@
+mat-card {
+    margin-top: 10px;
+    padding: 0px;
+}
+
+mat-card-header {
+    padding: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, .4);
+}
+
+mat-card-content {
+    margin-top: 10px;
+    padding: 10px 15px;
+}
+
+.close {
+    text-align: right;
+}
+
+.cerrar {
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.negrita {
+    font-weight: 500;
+}
+
+.mat-column-mes,
+.mat-column-anio,
+.mat-column-valor,
+.mat-column-porcentajeDepreciacion,
+.mat-column-detalle {
+    text-align: center;
+    font-size: 11px;
+    font-family: arial;
+    padding: 2px;
+}
+
+table {
+    width: 100%;
+}
+
+@media screen and (max-width: 750px) {
+    .tabla {
+        overflow-x: scroll;
+        overflow-y: scroll;
+    }
+    .caja{
+        overflow-y: scroll;
+    }
+    .mat-column-mes,
+    .mat-column-anio,
+    .mat-column-valor,
+    .mat-column-porcentajeDepreciacion,
+    .mat-column-detalle {
+        text-align: center;
+        font-size: 8px;
+        font-family: arial;
+        padding: 2px;
+    }
+}

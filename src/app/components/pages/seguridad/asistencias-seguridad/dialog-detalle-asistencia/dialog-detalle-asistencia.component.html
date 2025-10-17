@@ -1,0 +1,66 @@
+<div class="container-fluid">
+    <!-- ventana nro 4 - historial -->
+    <div class="grid-container">
+        <!-- *ngIf="Titulo == undefined; else titulomodificar" -->
+        <div class="title">Rangos de Fecha</div>
+        <div class="body">
+            <div class="container-cuerpo">
+                <div class="row" style="padding: 10px; width: 100%;">
+                    <div class="col-md-12 tabla">
+                        <table mat-table class="mat-elevation-z8" #table [dataSource]="dataSource">
+                            <ng-container matColumnDef="codConcepasist">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell">CONCEPTO
+                                </th>
+                                <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                    <ng-container *ngIf="data_det.codConcepasist == 'INA'">
+                                        INASISTENCIA
+                                    </ng-container>
+                                    <ng-container *ngIf="data_det.codConcepasist == 'INJ'">
+                                        INASISTENCIA JUSTIFICADA
+                                    </ng-container>
+                                    <ng-container *ngIf="data_det.codConcepasist == 'TAR'">
+                                        TARDANZA
+                                    </ng-container>
+                                    <ng-container *ngIf="data_det.codConcepasist == 'VAC'">
+                                        VACACIONES
+                                    </ng-container>
+                                    <ng-container *ngIf="data_det.codConcepasist != 'TAR' && data_det.codConcepasist != 'INA' && data_det.codConcepasist != 'INJ' && data_det.codConcepasist != 'VAC'">
+                                        INASISTENCIA
+                                    </ng-container>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="fecRegistro">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Fec. Registro</th>
+                                <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                    {{data_det.fecRegistro | date: 'dd/MM/Y'}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="fecInicio">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Hora Inicio Marcación
+                                </th>
+                                <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                    {{data_det.fecInicio | date: 'h:mm:ss a'}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="fecFin">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Hora Fin Marcación
+                                </th>
+                                <td class="mat-header-cell" mat-cell *matCellDef="let data_det">
+                                    {{data_det.fecFin | date: 'h:mm:ss a'}} </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="columnsToDisplay;"></tr>
+                            <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+                        </table>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <button class="button-cancelar" mat-flat-button type="button" mat-dialog-close>
+            <mat-icon aria-label="person">highlight_off
+            </mat-icon>
+            CERRAR</button>
+    </div>
+</div>

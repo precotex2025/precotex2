@@ -1,0 +1,73 @@
+<div class="container-fluid">
+    <!-- ventana nro 3 - salida -->
+    <div class="grid-container">
+
+        <div class="title">Factor de Calificación: Gestión (Agente Seguridad)</div>
+
+        <div class="find">
+            <div class="auditoriaForm">
+                <div class="row">
+                    <div class="col-md-12">
+                        <mat-card>
+                            <mat-card-header>
+                                <div class="row" style="width:100%">
+                                    <div class="col-md-6">
+                                        Seleccionar Periodo
+                                    </div>
+                                    <div class="col-md-3">
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <span class="text-right">
+                                            <button class="fila1-eliminar" (click)="regresar()">	<mat-icon>arrow_back_ios</mat-icon> Regresar</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </mat-card-header>
+                            <mat-card-content>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <mat-form-field appearance="fill" class="mat-form-field">
+                                            <mat-label>Periodo</mat-label>
+                                            <input matInput type="month" [(ngModel)]="mesActual"
+                                                (change)="getAprobacionPeriodo()" placeholder="Seleccione"
+                                                autocomplete="off" />
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-3 mt-1">
+                                        <mat-form-field  class="example-form-field mat-form-field" appearance="fill">
+                                            <mat-label>Tipo*</mat-label>
+                                            <mat-select [(ngModel)]="tipoFactor">
+                                                <mat-option value="1">Garita</mat-option>
+                                                <mat-option value="2">Puerta</mat-option>
+                                                <mat-option value="3">Rampa</mat-option>
+                                                <mat-option value="4">Ronda</mat-option>
+                                            </mat-select>
+                                          </mat-form-field>
+                                    </div>
+                                    <div class="col-md-3 mt-1">
+                                        <button type="button" class="fila1-excel" color="primary" mat-flat-button
+                                            (click)="generarReporte()">
+                                            <mat-icon aria-label="person">list_alt</mat-icon> Exportar Reporte
+                                        </button>
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        <span>Rango de Fecha</span> <br>
+                                        <span style="color:red">{{fechaRango1}} - {{fechaRango2}}</span>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin">
+    <p style="color: white; text-align: center; ">Cargando... </p>
+</ngx-spinner>
