@@ -24,12 +24,17 @@
                     </mat-form-field>
 
                     <mat-form-field appearance="fill">
-                        <mat-label>Código Ambiente</mat-label>
-                        <input matInput type="text" (input)="generarCodigo()" placeholder="Código Ambiente" autocomplete="off" formControlName="codAmbiente"/>
+                        <mat-label>Area</mat-label>
+                        <input matInput type="text" placeholder="Area" autocomplete="off" formControlName="codArea" [readonly]="true">
                     </mat-form-field>
                 </div>
 
                 <div class="fila2">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Código Ambiente</mat-label>
+                        <input matInput type="text" (input)="generarCodigo()" placeholder="Código Ambiente" autocomplete="off" formControlName="codAmbiente"/>
+                    </mat-form-field>
+
                     <mat-form-field class="example-form-field" appearance="fill">
                         <mat-label>Código General</mat-label>
                         <input matInput type="text" placeholder="Código General" autocomplete="off" formControlName="codGeneral" [readonly]="true">

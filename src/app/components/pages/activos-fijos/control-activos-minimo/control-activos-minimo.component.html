@@ -38,14 +38,14 @@
                                     </button>
                                 </div>
                                 <!-- *ngIf="!inventarioActivo && inventarioActivo!= null" -->
-                                <div class="col-md-2" *ngIf="codTrabajador == '9999' || codTrabajador == '3872'">
+                                <div class="col-md-2" *ngIf="codRol == '1' || codRol == '2'">
                                     <button mat-raised-button class="button-success" (click)="crearTomadeInventario()"
                                         color="primary">
                                         <mat-icon>add</mat-icon> Crear Nuevo
                                     </button>
                                 </div>
 
-                                <div class="col-md-2" *ngIf="codTrabajador == '9999' || codTrabajador == '3872'">
+                                <div class="col-md-2" *ngIf="codRol == '1' || codRol == '2'">
                                     <button mat-raised-button class="button-info-add"
                                         (click)="gestionTomadeInventario()" color="primary">
                                         <mat-icon>view_module</mat-icon> Gestión Inventario

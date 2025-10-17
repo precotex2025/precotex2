@@ -253,7 +253,7 @@ export class ControlActivosMinimoComponent implements OnInit {
   Ubicacion = ""
   Cod_Activo = ""
   Clase_Activo = 0
-
+  codRol = '';
   codTrabajador = '';
   tipo = 1;
 
@@ -271,6 +271,7 @@ export class ControlActivosMinimoComponent implements OnInit {
     private SpinnerService: NgxSpinnerService,
     private dialog: MatDialog) {
     this.codTrabajador = localStorage.getItem('codTrabajador')!;
+    this.codRol = localStorage.getItem('rol')!;
   }
 
   ngOnInit(): void {
@@ -307,7 +308,7 @@ export class ControlActivosMinimoComponent implements OnInit {
   getInventarios() {
     this.controlActivoFijoService.getInventarios().subscribe({
       next: (response: any) => {
-        console.log(response);
+        //console.log(response);
         this.dataInventarios = response;
         this.dataInventariosActivo = this.dataInventarios.filter(elem => {
           return elem.flgEstado == '1'
@@ -331,7 +332,7 @@ export class ControlActivosMinimoComponent implements OnInit {
   changeCodActivo(event:any){
     this.controlActivoFijoService.getNuevoCod(event.target.value).subscribe({
       next: (response: any) => {
-        console.log(response);
+        //console.log(response);
         if(response.status == 1){
           this.toastr.warning('El Nuevo código de Activo ya existe.', 'Cerrar', {
             timeOut: 2500,
@@ -377,7 +378,7 @@ export class ControlActivosMinimoComponent implements OnInit {
   getCentrosCosto() {
     this.controlActivoFijoService.getCentrosCosto().subscribe({
       next: (response: any) => {
-        console.log(response);
+        //console.log(response);
         this.dataCc = response;
       },
       error: (error) => {
@@ -1194,7 +1195,7 @@ export class ControlActivosMinimoComponent implements OnInit {
           this.SpinnerService.show();
           this.controlActivoFijoService.guardarActivoInventario(datos).subscribe({
             next: (response: any) => {
-              console.log(response);
+              //console.log(response);
               this.deshabilitar = false;
               this.SpinnerService.hide();
               if (response.status == 1) {
@@ -1839,7 +1840,7 @@ export class ControlActivosMinimoComponent implements OnInit {
       this.controlActivoFijoService.ObtenerActivoFijoCodigo(Cod_Activo).subscribe({
         next: (response: any) => {
 
-          console.log(response);
+          //console.log(response);
           if (response && response != null) {
             this.formulario.patchValue({
               codActivoRelacionado: response['codActivo']
@@ -2163,6 +2164,7 @@ export class ControlActivosMinimoComponent implements OnInit {
     this.SpinnerService.show();
     this.controlActivoFijoService.resumenTomaInventario(datos).subscribe({
       next: (response: any) => {
+        //console.log(response)
         this.totalRegistros = response.inventario
         this.SpinnerService.hide();
       },
@@ -2213,7 +2215,7 @@ export class ControlActivosMinimoComponent implements OnInit {
     this.controlActivoFijoService.getAmbientes().subscribe({
       next: (response: any) => {
         this.dataAmbiente = response;
-        //console.log(this.dataAmbiente)
+        console.log(this.dataAmbiente)
       },
       error: (error) => {
         console.log(error);
@@ -2338,7 +2340,7 @@ export class ControlActivosMinimoComponent implements OnInit {
   onCodigoGeneral(){
     let lc_Codigo = this.formulario.get('CodGeneral')?.value;
     
-    if (lc_Codigo != null && lc_Codigo.length >= 7){
+    if (lc_Codigo != null && lc_Codigo.length >= 9){
       let ambiente: ambiente[];
       let ubicacion: ubicacion[];
       let centroCosto: centroCosto[];
@@ -2346,7 +2348,7 @@ export class ControlActivosMinimoComponent implements OnInit {
       let piso: piso[];
 
       ambiente = this.dataAmbiente.filter(d => d.codGeneral == lc_Codigo);
-      
+      console.log(ambiente)
       if(ambiente.length>0){
         ubicacion = this.dataUbicacion.filter(d => d.idUbicacion == ambiente[0].idUbicacion);
         centroCosto = this.dataCc.filter(d => d.id == ambiente[0].idCc);

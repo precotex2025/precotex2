@@ -33,6 +33,7 @@ export class DialogUbicacionActivosComponent implements OnInit {
     codGeneral: ['', Validators.required],
     codSede: [''],
     codPiso: [''],
+    codArea: [''],
     desArea: [''],
     centroCosto: ['', Validators.required],
     codAmbiente: ['', Validators.required],
@@ -88,7 +89,7 @@ export class DialogUbicacionActivosComponent implements OnInit {
       });
       
       this.formulario.controls['desArea'].disable();
-      this.codGeneral = this.data.data.data.codGeneral.substring(0,4);
+      this.codGeneral = this.data.data.data.codGeneral.substring(0,7);
       this.idCCost = this.data.data.data.idCc;
     }
 
@@ -112,6 +113,7 @@ export class DialogUbicacionActivosComponent implements OnInit {
 
           this.formulario.patchValue({
             desArea: ubicacion[0].desArea,
+            codArea: ubicacion[0].desArea.substring(4,100),
             codSede: ubicacion[0].codSede.concat(" - ").concat(sede[0].desEstablecimiento),
             codPiso: ubicacion[0].codPiso.concat(" - ").concat(piso[0].desPiso)
           });
@@ -224,8 +226,8 @@ export class DialogUbicacionActivosComponent implements OnInit {
   }
 
   changeUbicacion(event: any) {
-    //console.log(event);
-    //console.log(event.codPiso);
+    console.log(event);
+    console.log(event.codArea);
     if (event != undefined && event != null) {
       let sede: any[];
       let piso: any[];
@@ -233,10 +235,11 @@ export class DialogUbicacionActivosComponent implements OnInit {
       sede = this.dataSedes.filter(d => d.codEstablecimiento == event.codSede);
       this.centroCosto = this.dataCc.filter(d => d.idArea == event.idArea);
       console.log(this.centroCosto)
-      this.codGeneral = sede[0].codEstablecimiento.concat(piso[0].codPiso);
+      this.codGeneral = sede[0].codEstablecimiento.concat(piso[0].codPiso).concat(event.codArea);
 
       this.formulario.patchValue({
         idUbicacion: event.idUbicacion,
+        codArea: event.desArea.substring(4,100),
         codSede: event.codSede.concat(" - ").concat(sede[0].desEstablecimiento),
         codPiso: event.codPiso.concat(" - ").concat(piso[0].desPiso)
       })
@@ -246,7 +249,7 @@ export class DialogUbicacionActivosComponent implements OnInit {
   generarCodigo(){
     let codAmbiente = this.formulario.get('codAmbiente')?.value;
     //console.log(Cod_Activo)
-    if (codAmbiente != null && codAmbiente.length == 3){
+    if (codAmbiente != null && codAmbiente.length == 2){
       this.formulario.patchValue({
         codGeneral: this.codGeneral.concat(codAmbiente)
       });
