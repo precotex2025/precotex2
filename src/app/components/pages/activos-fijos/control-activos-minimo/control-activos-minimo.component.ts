@@ -45,6 +45,7 @@ interface ubicacion {
   codSede: string;
   codArea: string;
   codPiso: string;
+  idArea: number;
 }
 
 interface centroCosto{
@@ -2351,8 +2352,10 @@ export class ControlActivosMinimoComponent implements OnInit {
       console.log(ambiente)
       if(ambiente.length>0){
         ubicacion = this.dataUbicacion.filter(d => d.idUbicacion == ambiente[0].idUbicacion);
+        console.log(ubicacion)
         centroCosto = this.dataCc.filter(d => d.id == ambiente[0].idCc);
-        area = this.dataAreas.filter(d => d.idArea == centroCosto[0].idArea);
+        area = this.dataAreas.filter(d => d.idArea == ubicacion[0].idArea);
+        console.log(area)
         piso = this.dataPisos.filter(d => d.codPiso == ubicacion[0].codPiso);
 
         this.formulario.patchValue({
