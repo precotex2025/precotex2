@@ -32,7 +32,6 @@ yarn-error.log
 /.angular/cache
 .sass-cache/
 /connect.lock
-/src/environments/environment.ts
 /coverage
 /libpeerconnection.log
 testem.log
