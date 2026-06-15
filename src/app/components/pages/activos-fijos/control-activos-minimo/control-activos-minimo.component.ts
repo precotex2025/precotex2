@@ -1191,6 +1191,7 @@ export class ControlActivosMinimoComponent implements OnInit {
             imei: this.formulario.get('Imei')!.value,
             celular: this.formulario.get('Celular')!.value,
             medida: this.formulario.get('Medidas')!.value,
+            fechaVencimiento: this.formulario.get('fechaVencimiento')?.value != '' ? this.formulario.get('fechaVencimiento')?.value : null,
             nuevoCodActivo: this.formulario.get('nuevoCodActivo')!.value
           }
           this.SpinnerService.show();
@@ -1924,12 +1925,18 @@ export class ControlActivosMinimoComponent implements OnInit {
 
           if (result != null) {
             var fechaAlta = "";
+            var fechaVencimiento = "";
             let piso: piso[];
             piso = this.dataPisos.filter(d => d.numPiso == result['numPiso'].toString());
 
             if (result['fechaAltaActivo'] != null) {
               fechaAlta = result['fechaAltaActivo'].substring(0, 10)
             }
+
+            if (result['fechaVencimiento'] != null) {
+              fechaVencimiento = result['fechaVencimiento'].substring(0, 10)
+            }
+
             this.mostrarNuevo = true;
             //this.matSnackBar.open('Registro encontrado.', 'Cerrar', { horizontalPosition: 'center', verticalPosition: 'top', duration: 2500 })
             //console.log(result['tipoActivo']);
@@ -1984,7 +1991,7 @@ export class ControlActivosMinimoComponent implements OnInit {
               Celular: result['celular'] != null ? result['celular'] : '',
               Capacidad: result['capacidad'] != null ? result['capacidad'] : '',
               Imei: result['imei'] != null ? result['imei'] : '',
-              fechaVencimiento: result['fechaVencimiento'],
+              fechaVencimiento: fechaVencimiento,
               fechaAltaActivo: fechaAlta,
               codActivoRelacionado: result['codActivoRelacionado'] != null ? result['codActivoRelacionado'].trim() : '',
               observacionBaja: result['observacionBaja'] != null ? result['observacionBaja'].trim() : ''
@@ -2071,7 +2078,8 @@ export class ControlActivosMinimoComponent implements OnInit {
                 ['Imei']: item.imei,
                 ['Fecha Registro']: item.fecRegistro,
                 ['Cod Usuario Modifico']: item.codUsuarioModifico,
-                ['Nuevo Cod. Activo']: item.nuevoCodActivo
+                ['Nuevo Cod. Activo']: item.nuevoCodActivo,
+                ['Fecha Vencimiento']: item.fechaVencimiento
               }
               this.dataForExcel.push(datos);
 
