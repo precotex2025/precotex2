@@ -161,7 +161,7 @@ export class PrestamosReparacionesComponent implements OnInit {
 
   changeCodActivo(event:any){
     var valor = event.target.value;
-    if(valor != '' && valor.length == 9){
+    if(valor != '' && valor.length >= 7){
       this.controlActivoFijoService.ObtenerActivoFijoCodigo(valor).subscribe({
         next: (response: any) => {
             console.log(response)
@@ -174,10 +174,12 @@ export class PrestamosReparacionesComponent implements OnInit {
         },
         error: (error) => {
           console.log(error)
-          this.formulario.patchValue({
-            codActivoFijo: ''
-          })
-          this.activo = null;
+          if(valor.length > 8){
+            this.formulario.patchValue({
+              codActivoFijo: ''
+            })
+            this.activo = null;
+          }
         }
       });
     }

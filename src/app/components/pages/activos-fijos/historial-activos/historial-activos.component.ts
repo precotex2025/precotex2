@@ -253,7 +253,8 @@ export class HistorialActivosComponent implements OnInit {
     }
     else {
       if (this.Fecha_Auditoria != null && this.Fecha_Auditoria2 != null) {
-        this.SeguridadActivoFijoReporteService.reporteHistorialActivos(
+        //this.SeguridadActivoFijoReporteService.reporteHistorialActivos(
+        this.SeguridadActivoFijoReporteService.reporteHistorialActivo(  // 2026ago28 corrige exportacion a excel
           this.Fecha_Auditoria,
           this.Fecha_Auditoria2
         ).subscribe(

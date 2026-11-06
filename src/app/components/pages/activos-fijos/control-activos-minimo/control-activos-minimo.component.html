@@ -622,8 +622,8 @@
                                     [checked]="dataFijar.observacion">Fijar
                                 </mat-checkbox>
                             </div>
-
                         </div>
+
                         <div class="findcol1" *ngIf="formulario.get('Descripcion')?.value == 'CELULAR'">
                             <div class="caja">
                                 <mat-form-field class="example-full-width" appearance="fill">
@@ -645,6 +645,13 @@
                                 <mat-form-field class="example-full-width" appearance="fill">
                                     <mat-label>Fecha de Vencimiento</mat-label>
                                     <input matInput type="date" formControlName="fechaVencimiento">
+                                </mat-form-field>
+                            </div>
+
+                            <div class="caja">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Capacidad</mat-label>
+                                    <input matInput formControlName="Capacidad">
                                 </mat-form-field>
                             </div>
                         </div>
@@ -707,7 +714,6 @@
                         </div>
 
                     </mat-card-content>
-
 
                     <mat-card-content *ngIf="detalleCategoria.otros">
                         <div class="findcol1">
